@@ -55,8 +55,8 @@ User.init(
     modelName: 'User',
     tableName: 'USER',
     timestamps: false,
+    logging:false
   }
 );
-console.log("OIE")
 
 module.exports = {User, sequelize};

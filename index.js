@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
 const {User, sequelize} = require('./models/userModel');
+const {Routine, _} = require('./models/routineModel');
+const {Workout, _} = require('./models/workoutModel');
+const {Exercise, _} = require('./models/exerciseModel');
+const {Workout_Exercise, _} = require('./models/workout_exerciseModel');
+const {Routine_Workouts, _} = require('./models/routine_workoutsModel');
+
+
 
 const port = 3000;
 
@@ -10,23 +17,42 @@ app.get('/', (req, res) => {
 
 sequelize.sync()
   .then(() => {
-    console.log('Modelo sincronizado com o banco de dados.');
+    console.log('Modelo sincronizado com o banco de dados.\n');
 
     User.create({
       id: 2,
       name: 'vitormamoeu',
-      login: 'johndoe@example.com',
+      login: 'TESTE@example.com',
       pass: 'senha123',
       age: 22,
       weight: 22,
       height: 22,
     })
       .then(newUser => {
-        console.log(newUser);
+        //console.log(newUser);
+        console.log('Inserção do usuário foi efetuada corretamente.\n');
       })
       .catch(error => {
-        console.error(error);
+        //console.error(error);
+        console.error(error.parent.sql);
+        console.error("Valores:", error.parent.parameters);
+        console.error("ERROR MESSAGE: ", error.errors[0].message, "\n");
       });
+
+      Routine.create({
+        id: 1,
+        user_creator_id: 2
+      })
+        .then(newRoutine => {
+          //console.log(newUser);
+          console.log('Inserção do rotina foi efetuada corretamente.\n');
+        })
+        .catch(error => {
+          //console.error(error);
+        console.error(error.parent.sql);
+        console.error("Valores:", error.parent.parameters);
+        console.error("ERROR MESSAGE: ", error.errors[0].message, "\n");
+        });
   })
   .catch((error) => {
     console.error('Erro ao sincronizar o modelo com o banco de dados:', error);

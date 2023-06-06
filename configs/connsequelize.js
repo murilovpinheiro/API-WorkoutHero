@@ -3,7 +3,8 @@ const Sequelize  = require('sequelize');
 // Configurações de conexão com o banco de dados
 const sequelize = new Sequelize('heroworkout', 'postgres', 'password', {
   host: 'localhost',
-  dialect: 'postgres',
+  dialect: 'postgres', 
+  logging: false,
 });
 
 // Testar a conexão com o banco de dados
