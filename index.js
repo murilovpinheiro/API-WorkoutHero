@@ -1,13 +1,11 @@
 const express = require('express');
 const app = express();
 const {User, sequelize} = require('./models/userModel');
-const {Routine, _} = require('./models/routineModel');
-const {Workout, _} = require('./models/workoutModel');
-const {Exercise, _} = require('./models/exerciseModel');
-const {Workout_Exercise, _} = require('./models/workout_exerciseModel');
-const {Routine_Workouts, _} = require('./models/routine_workoutsModel');
-
-
+const {Routine} = require('./models/routineModel');
+const {Workout} = require('./models/workoutModel');
+const {Exercise} = require('./models/exerciseModel');
+const {Workout_Exercise} = require('./models/workout_exerciseModel');
+const {Routine_Workouts} = require('./models/routine_workoutsModel');
 
 const port = 3000;
 
