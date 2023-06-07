@@ -14,11 +14,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/form/user_insert', (req, res) => {
-  res.sendFile(path.join(__dirname, 'html/userForm.html'));
+  res.sendFile(path.join(__dirname, 'html/user_insertForm.html'));
 });
 
 app.get('/form/user_select', (req, res) => {
   res.sendFile(path.join(__dirname, 'html/user_selectForm.html'));
+});
+
+app.get('/form/user_delete', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html/user_deleteForm.html'));
 });
 
 sequelize.sync()

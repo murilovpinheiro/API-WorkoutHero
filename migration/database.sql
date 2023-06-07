@@ -1,7 +1,8 @@
 -- drop table "ROUTINE", "USER", "USER_CREATES_ROUTINE", "WORKOUT", "ROUTINE_WORKOUTS", "EXERCISE", "WORKOUT_EXERCISE", "MUSCULAR_GROUP" ,"MUSCULAR_GROUP_EXERCISE" ,"HISTORIC", "WORKOUT_REALIZED"
 
 create table if not exists "ROUTINE"(
-					   id int not null, primary key (id));
+					   id int not null, primary key (id),
+					   user_creator_id int not null);
 
 create table if not exists "USER"(
 					id int not null,
@@ -18,13 +19,18 @@ create table if not exists "USER"(
 					primary key(id),
 					foreign key (routine_id) references "ROUTINE");
 
-create table if not exists "USER_CREATES_ROUTINE"(
+ALTER TABLE "ROUTINE"
+ADD CONSTRAINT fk_user_creator_id
+FOREIGN KEY (user_creator_id) REFERENCES "USER" ON DELETE CASCADE;
+
+
+/* create table if not exists "USER_CREATES_ROUTINE"(
 							user_id int not null,
 							routine_id int not null,
 							primary key (user_id, routine_id),
 							foreign key (user_id) references "USER",
 							foreign key (routine_id) references "ROUTINE"
-							);
+							);*/
 						
 create table if not exists "WORKOUT"(
 							id int not null,
@@ -33,7 +39,7 @@ create table if not exists "WORKOUT"(
 							obj character varying(20) not null, -- não sei muito bem como fazer o objetivo por enquanto fica assim
 							user_id int not null,
 							primary key (id),
-							foreign key (user_id) references "USER",
+							foreign key (user_id) references "USER" ON DELETE CASCADE,
 							check (difficulty IN ('E', 'M', 'H')) -- por enquanto fica assim, no futuro talvez adicione uma função para modificar
 							);
 						
@@ -42,8 +48,8 @@ create table if not exists "ROUTINE_WORKOUTS"(
 											  routine_id int not null,
 											  workout_id int not null,
 											  primary key (id),
-											  foreign key (routine_id) references "ROUTINE",
-											  foreign key (workout_id) references "WORKOUT");
+											  foreign key (routine_id) references "ROUTINE" ON DELETE CASCADE,
+											  foreign key (workout_id) references "WORKOUT" ON DELETE CASCADE);
 						
 create table if not exists "EXERCISE"(
 									 id int not null,
@@ -55,7 +61,7 @@ create table if not exists "EXERCISE"(
 									 obj character varying(20) not null, -- não sei muito bem como fazer o objetivo por enquanto fica assim
 									 reps_progress int,
 									 weight_progress real,
-									 rest interval not null,
+									 rest time not null,
 									 primary key (id),
 									 check (difficulty IN ('E', 'M', 'H'))
 									 );
@@ -65,8 +71,8 @@ create table if not exists "WORKOUT_EXERCISE"(
 											 workout_id int not null,
 											 exercise_id int not null,
 											 primary key (id),
-											 foreign key (workout_id) references "WORKOUT",
-											 foreign key (exercise_id) references "EXERCISE"
+											 foreign key (workout_id) references "WORKOUT" ON DELETE CASCADE,
+											 foreign key (exercise_id) references "EXERCISE" ON DELETE CASCADE
 											 );
 
 create table if not exists "MUSCULAR_GROUP"(
@@ -90,18 +96,18 @@ create table if not exists "HISTORIC"(
 									 days_trained int not null,
 									 weights_lifted real not null,
 									 reps_done int not null,
-									 time_training numeric(5, 2) not null,
+									 time_training integer not null, -- suposto a mudanças
 									 primary key(id),
-									 foreign key (user_id) references "USER");
+									 foreign key (user_id) references "USER" ON DELETE CASCADE);
 
 create table if not exists "WORKOUT_REALIZED"(
 											  id int not null,
 											  date_ date not null,
-											  duration interval not null,
+											  duration time not null,
 											  workout_id int not null,
 											  historic_id int not null,
 											  primary key(id),
-											  foreign key (workout_id) references "WORKOUT",
-											  foreign key (historic_id) references "HISTORIC",
+											  foreign key (workout_id) references "WORKOUT" ON DELETE CASCADE,
+											  foreign key (historic_id) references "HISTORIC" ON DELETE CASCADE,
 											  CHECK (date_ >= '2023-01-01' AND date_ <= CURRENT_DATE)
 											);

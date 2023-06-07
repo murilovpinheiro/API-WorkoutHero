@@ -23,8 +23,6 @@ router.get('/select', buildWhereUser, async (req, res) => {
       }else{
         res.json(records); // Imprima os registros como JSON
       }
-      
-
   }catch(error){
   // já já mudar o erro para JSON
       const response = {
@@ -34,6 +32,31 @@ router.get('/select', buildWhereUser, async (req, res) => {
       };
       res.json(response); // Envie a resposta JSON no caso de erro
       //console.error('Erro ao pesquisar registros:', error);
+  }
+});
+
+router.post('/delete', urlencodedParser, async (req, res) => {
+  const {id} = req.body;
+  try {
+   const numDeleted = await User.destroy({
+      where: {
+        id: id
+      }
+    });
+    console.log(numDeleted);
+    if (numDeleted >= 1){
+      res.json({message: "Usuário excluído com sucesso."});
+    }
+    else{
+      res.json({message: "Nenhum usuário encontrado com o ID fornecido."});
+    }
+  } catch{
+    const response = {
+      sql: error.parent.sql,
+      parameters: error.parent.parameters,
+      message: error.original.message,
+    };
+    res.json(response); // Envie a resposta JSON no caso de erro
   }
 });
 
