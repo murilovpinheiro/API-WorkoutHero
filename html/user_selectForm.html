@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pesquisa</title>
+</head>
+<body>
+  <h1>Pesquisa</h1>
+  <form action="/user/select" method="GET">
+    <label for="id">ID:</label>
+    <input type="number" name="id" id="id">
+    <br>
+
+    <label for="name">Nome:</label>
+    <input type="text" name="name" id="name">
+    <br>
+    <label for="login">Login:</label>
+    <input type="text" name="login" id="login">
+    <br>
+    <label for="pass">Senha:</label>
+    <input type="password" name="pass" id="pass">
+    <br>
+    <label for="age">Idade:</label>
+    <input type="number" name="age" id="age">
+    <br>
+    <label for="weight">Peso:</label>
+    <input type="number" name="weight" id="weight" step="0.01">
+    <br>
+    <label for="height">Altura:</label>
+    <input type="number" name="height" id="height" step="0.01">
+    <br>
+    <label for="sex">Sexo:</label>
+    <select name="sex" id="sex">
+      <option value="">Selecione</option>
+      <option value="M">Masculino</option>
+      <option value="F">Feminino</option>
+      <option value="O">Outro</option>
+    </select>
+    <br>
+    <label for="obj">Objetivo:</label>
+    <input type="text" name="obj" id="obj">
+    <br>
+    <label for="xp">XP:</label>
+    <input type="number" name="xp" id="xp">
+    <br>
+    <label for="routine_id">ID da Rotina:</label>
+    <input type="number" name="routine_id" id="routine_id">
+    <br>
+    <input type="submit" value="Pesquisar">
+  </form>
+</body>
+</html>

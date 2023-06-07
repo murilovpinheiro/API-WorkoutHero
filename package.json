@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/merilimv/API-WorkoutHero#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "dotenv": "^16.1.4",
+    "path": "^0.12.7",
     "pg": "^8.11.0",
     "sequelize": "^6.32.0"
   },

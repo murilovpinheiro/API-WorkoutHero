@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulário de Cadastro</title>
+</head>
+<body>
+  <h1>Formulário de Cadastro</h1>
+  <form method="POST" action="/user/insert">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id" required>
+    <br>
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="login">Login:</label>
+    <input type="text" id="login" name="login" required>
+    <br>
+    <label for="pass">Senha:</label>
+    <input type="password" id="pass" name="pass" required>
+    <br>
+    <label for="age">Idade:</label>
+    <input type="number" id="age" name="age" required>
+    <br>
+    <label for="weight">Peso:</label>
+    <input type="number" name="weight" id="weight" step="0.01">
+    <label for="height">Altura:</label>
+    <input type="number" name="height" id="height" step="0.01">
+    <br>
+    <label for="sex">Sexo:</label>
+    <select id="sex" name="sex" required>
+      <option value="M">Masculino</option>
+      <option value="F">Feminino</option>
+      <option value="O">Outro</option>
+    </select>
+    <br>
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>

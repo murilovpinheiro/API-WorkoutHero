@@ -1,25 +1,29 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const {User, sequelize} = require('./models/userModel');
 
-const {Routine} = require('./models/routineModel');
-const {Workout} = require('./models/workoutModel');
-const {Exercise} = require('./models/exerciseModel');
-const {Workout_Exercise} = require('./models/workout_exerciseModel');
-const {Routine_Workouts} = require('./models/routine_workoutsModel');
 const userRoutes = require('./routes/userRoutes')
 
 const port = 3000;
 
-app.use(userRoutes)
+app.use("/user", userRoutes)
 
 app.get('/', (req, res) => {
   res.send('Bem-vindo à minha API!');
 });
 
+app.get('/form/user_insert', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html/userForm.html'));
+});
+
+app.get('/form/user_select', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html/user_selectForm.html'));
+});
+
 sequelize.sync()
   .then(() => {
-    console.log('Modelo sincronizado com o banco de dados.\n');
+    console.log('Modelo sincronizado com o banco de dados.');
   })
   .catch(error => {
     console.error('Erro ao sincronizar modelos com o banco de dados:', error);
@@ -28,38 +32,3 @@ sequelize.sync()
 app.listen(port, async () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });
-
-/*
-User.create({
-  id: 4,
-  name: 'Natan',
-  login: 'TESTE3@example.com',
-  pass: 'senhasenha',
-  age: 17,
-  weight: 22,
-  height: 22,
-})
-  .then(newUser => {
-    console.log(newUser);
-    console.log('Inserção do usuário foi efetuada corretamente.\n');
-  })
-  .catch(error => {
-    console.error(error.parent.sql);
-    console.error("Valores:", error.parent.parameters);
-    console.error("ERROR MESSAGE: ", error.errors[0].message, "\n");
-  }).then(() => {
-    Routine.create({
-      id: 5,
-      user_creator_id: 4
-    })
-      .then(newRoutine => {
-        //console.log(newRoutine);
-        console.log('Inserção da rotina foi efetuada corretamente.\n');
-      })
-      .catch(error => {
-        console.error(error.parent.sql);
-        console.error("Valores:", error.parent.parameters);
-        console.error("ERROR MESSAGE: ", error.parent.detail, "\n");
-      });
-  });
-*/
