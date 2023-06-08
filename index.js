@@ -25,6 +25,10 @@ app.get('/form/user_delete', (req, res) => {
   res.sendFile(path.join(__dirname, 'html/user_deleteForm.html'));
 });
 
+app.get('/form/user_update', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html/user_updateForm.html'));
+});
+
 sequelize.sync()
   .then(() => {
     console.log('Modelo sincronizado com o banco de dados.');

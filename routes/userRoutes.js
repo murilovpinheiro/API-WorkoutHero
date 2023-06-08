@@ -3,15 +3,15 @@ const app = express();
 const {User, sequelize} = require('../models/userModel');
 const router = express.Router();
 var bodyParser = require('body-parser')
-const { buildWhereUser } = require('../middlewares/middlewares');
+const { buildUser } = require('../middlewares/middlewares');
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 //mudança do all para depois, em vez de ficar todos os valores id: numero/n, name: nome, ficar só uma lista {numero, nome,...} discutir isso com eles depois
-
-router.get('/select', buildWhereUser, async (req, res) => {
-  const whereClause = req.whereClause;
+//USO o urlencodedParser pra deixar todo na tipagem do javascript e deixar mais fácil de mexer
+router.get('/select', urlencodedParser, buildUser, async (req, res) => {
+  const whereClause = req.clause;
   //console.log(whereClause)
   try{
       const records = (await User.findAll({
@@ -60,7 +60,7 @@ router.post('/delete', urlencodedParser, async (req, res) => {
   }
 });
 
-router.post('/insert',urlencodedParser ,async (req, res) => {
+router.post('/insert',urlencodedParser, async (req, res) => {
   const { id, name, login, pass, age, weight, height, sex} = req.body;
   //console.log(req.body);
   try {
@@ -90,6 +90,29 @@ router.post('/insert',urlencodedParser ,async (req, res) => {
       message: error.original.message,
     };
     res.json(response); // Envie a resposta JSON no caso de erro
+  }
+});
+
+router.post('/update', urlencodedParser, buildUser, async (req, res) => {
+  const {id, ...updateClause} = req.clause;
+  try {
+    const user = await User.findByPk(id);
+    if (user) {
+      const updateUser = await user.update(updateClause);
+      const response = {
+        updateUser: updateUser,
+        message: 'Usuário atualizado com sucesso.',
+      };
+      res.json(response);
+    } else {
+      res.json({message: 'Usuário não encontrado.'});
+    }
+  } catch (error) {
+    const response = {
+      sql: error.parent.sql,
+      parameters: error.parent.parameters,
+      message: error.original.message,
+    };
   }
 });
 

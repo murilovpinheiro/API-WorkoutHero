@@ -1,55 +1,61 @@
-function buildWhereUser(req, res, next) {
-  const filters = req.query;
-  const where = {};
+function buildUser(req, res, next) {
+  let filters;
+  if (Object.keys(req.query).length === 0) {
+    filters = req.body 
+  }
+  else{
+    filters = req.query;
+  }
+  const clause = {};
 
   if (filters.id) {
-    where.id = filters.id;
+    clause.id = filters.id;
   }
 
   if (filters.name) {
-    where.name = filters.name;
+    clause.name = filters.name;
   }
 
   if (filters.login) {
-    where.login = filters.login;
+    clause.login = filters.login;
   }
 
   if (filters.pass) {
-    where.pass = filters.pass;
+    clause.pass = filters.pass;
   }
 
   if (filters.age) {
-    where.age = filters.age;
+    clause.age = filters.age;
   }
 
   if (filters.weight) {
-    where.weight = filters.weight;
+    clause.weight = filters.weight;
   }
 
   if (filters.height) {
-    where.height = filters.height;
+    clause.height = filters.height;
   }
 
   if (filters.sex) {
-    where.sex = filters.sex;
+    clause.sex = filters.sex;
   }
 
   if (filters.obj) {
-    where.obj = filters.obj;
+    clause.obj = filters.obj;
   }
 
   if (filters.xp) {
-    where.xp = filters.xp;
+    clause.xp = filters.xp;
   }
 
   if (filters.routine_id) {
-    where.routine_id = filters.routine_id;
+    clause.routine_id = filters.routine_id;
   }
 
-  req.whereClause = where;
+  req.clause = clause;
   next();
 }
 
 module.exports = {
-    buildWhereUser,
+    buildUser,
   };
