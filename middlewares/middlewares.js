@@ -56,6 +56,31 @@ function buildUser(req, res, next) {
   next();
 }
 
+//  DEPOIS TENTAR DEIXAR TUDO ADAPTADO NO USER
+
+function buildRoutine(req, res, next) {
+  let filters;
+  if (Object.keys(req.query).length === 0) {
+    filters = req.body 
+  }
+  else{
+    filters = req.query;
+  }
+  const clause = {};
+
+  if (filters.id) {
+    clause.id = filters.id;
+  }
+
+  if (filters.name) {
+    clause.user_creator_id = filters.user_creator_id;
+  }
+  
+  req.clause = clause;
+  next();
+}
+
+
 module.exports = {
-    buildUser,
+    buildUser, buildRoutine,
   };

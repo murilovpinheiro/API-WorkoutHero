@@ -4,29 +4,40 @@ const path = require('path');
 const {User, sequelize} = require('./models/userModel');
 
 const userRoutes = require('./routes/userRoutes')
+const routineRoutes = require('./routes/routineRoutes')
 
 const port = 3000;
 
 app.use("/user", userRoutes)
+app.use("/routine", routineRoutes)
+
 
 app.get('/', (req, res) => {
   res.send('Bem-vindo à minha API!');
 });
 
 app.get('/form/user_insert', (req, res) => {
-  res.sendFile(path.join(__dirname, 'html/user_insertForm.html'));
+  res.sendFile(path.join(__dirname, 'html/userPlaceholders/user_insertForm.html'));
 });
 
 app.get('/form/user_select', (req, res) => {
-  res.sendFile(path.join(__dirname, 'html/user_selectForm.html'));
+  res.sendFile(path.join(__dirname, 'html/userPlaceholders//user_selectForm.html'));
 });
 
 app.get('/form/user_delete', (req, res) => {
-  res.sendFile(path.join(__dirname, 'html/user_deleteForm.html'));
+  res.sendFile(path.join(__dirname, 'html/userPlaceholders/user_deleteForm.html'));
 });
 
 app.get('/form/user_update', (req, res) => {
-  res.sendFile(path.join(__dirname, 'html/user_updateForm.html'));
+  res.sendFile(path.join(__dirname, 'html/userPlaceholders/user_updateForm.html'));
+});
+
+app.get('/form/routine_insert', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html/routinePlaceholders/routine_insertForm.html'));
+});
+
+app.get('/form/routine_select', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html/routinePlaceholders/routine_selectForm.html'));
 });
 
 sequelize.sync()
