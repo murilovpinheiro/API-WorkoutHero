@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
   res.send('Bem-vindo à minha API!');
 });
 
+
 app.get('/form/user_insert', (req, res) => {
   res.sendFile(path.join(__dirname, 'html/userPlaceholders/user_insertForm.html'));
 });
