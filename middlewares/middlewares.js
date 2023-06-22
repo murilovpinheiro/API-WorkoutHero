@@ -47,9 +47,118 @@ function buildRoutine(req, res, next) {
   buildClause(req, res, next, filterMapping);
 }
 
+// Para construir o filtro do exercicio
+function buildExercise(req, res, next) {
+  const filterMapping = {
+    id: 'id',
+    name: 'user_creator_id',
+    difficulty: 'difficulty',
+    sets: 'sets',
+    reps: 'reps',
+    weight: 'weight',
+    obj: 'obj',
+    reps_progress: 'reps_progress',
+    weight_progress: 'weight_progress',
+    rest: 'rest'
+  };
+
+  buildClause(req, res, next, filterMapping);
+}
+
+// Para construir o filtro do histórico
+function buildHistoric(req, res, next) {
+  const filterMapping = {
+    id: 'id',
+    user_id: 'user_id',
+    days_trained: 'days_trained',
+    weights_lifted: 'weights_lifted',
+    reps_done: 'reps_done',
+    time_training: 'time_training'
+  };
+
+  buildClause(req, res, next, filterMapping);
+}
+
+// Para construir o filtro do muscular_group_exercise
+function buildMuscularGroupExercise(req, res, next) {
+  const filterMapping = {
+    id: 'id',
+    muscular_group_id: 'muscular_group_id',
+    exercise_id: 'exercise_id'
+  };
+
+  buildClause(req, res, next, filterMapping);
+}
+
+// Para construir o filtro do muscular_group
+function buildMuscularGroup(req, res, next) {
+  const filterMapping = {
+    id: 'id',
+    name: 'name'
+  };
+
+  buildClause(req, res, next, filterMapping);
+}
+
+// Para construir o filtro do routine_workouts
+function buildRoutineWorkouts(req, res, next) {
+  const filterMapping = {
+    id: 'id',
+    routine_id: 'routine_id',
+    workout_id: 'workout_id'
+  };
+
+  buildClause(req, res, next, filterMapping);
+}
+
+// Para construir o filtro do workout_exercise
+function buildWorkoutExercise(req, res, next) {
+  const filterMapping = {
+    id: 'id',
+    workout_id: 'workout_id',
+    exercise_id: 'exercise_id'
+  };
+
+  buildClause(req, res, next, filterMapping);
+}
+
+// Para construir o filtro do workout_realized
+function buildWorkoutRealized(req, res, next) {
+  const filterMapping = {
+    id: 'id',
+    date_ : 'date_',
+    duration: 'duration',
+    workout_id: 'workout_id',
+    historic_id: 'historic_id'
+  };
+
+  buildClause(req, res, next, filterMapping);
+}
+
+// Para construir o filtro do workout
+function buildWorkout(req, res, next) {
+  const filterMapping = {
+    id: 'id',
+    difficulty: 'difficulty',
+    obj: 'obj',
+    user_id:'user_id'
+  };
+
+  buildClause(req, res, next, filterMapping);
+}
+
 
 module.exports = {
-    buildUser, buildRoutine,
+    buildUser, 
+    buildRoutine, 
+    buildExercise, 
+    buildHistoric, 
+    buildMuscularGroupExercise,
+    buildMuscularGroup, 
+    buildRoutineWorkouts,
+    buildWorkoutExercise,
+    buildWorkoutRealized,
+    buildWorkout
   };
 
   // function buildUser(req, res, next) {
