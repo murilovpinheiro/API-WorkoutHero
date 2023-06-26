@@ -1,20 +1,20 @@
 const express = require('express');
 const app = express();
-const {Routine, sequelize} = require('../models/routineModel');
+const {Routine_Workout, sequelize} = require('../models/routine_workoutsModel');
 const router = express.Router();
 var bodyParser = require('body-parser')
-const { buildRoutine } = require('../middlewares/middlewares');
+const { buildRoutineWorkouts } = require('../middlewares/middlewares');
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 //mudança do all para depois, em vez de ficar todos os valores id: numero/n, name: nome, ficar só uma lista {numero, nome,...} discutir isso com eles depois
 //USO o urlencodedParser pra deixar todo na tipagem do javascript e deixar mais fácil de mexer
-router.get('/select', urlencodedParser, buildRoutine, async (req, res) => {
+router.get('/select', urlencodedParser, buildRoutineWorkouts, async (req, res) => {
   const whereClause = req.clause;
   //console.log(whereClause)
   try{
-      const records = (await Routine.findAll({
+      const records = (await Routine_Workout.findAll({
         where: whereClause,
       })).map(record => record.toJSON());
 
@@ -38,17 +38,17 @@ router.get('/select', urlencodedParser, buildRoutine, async (req, res) => {
 router.post('/delete', urlencodedParser, async (req, res) => {
   const {id} = req.body;
   try {
-   const numDeleted = await Routine.destroy({
+   const numDeleted = await Routine_Workout.destroy({
       where: {
         id: id
       }
     });
     console.log(numDeleted);
     if (numDeleted >= 1){
-      res.json({message: "Rotina excluído com sucesso."});
+      res.json({message: "Routine_Workout excluído com sucesso."});
     }
     else{
-      res.json({message: "Nenhuma Rotina encontrada com o ID fornecido."});
+      res.json({message: "Nenhum Routine_Workout encontrado com o ID fornecido."});
     }
   } catch{
     const response = {
@@ -60,18 +60,19 @@ router.post('/delete', urlencodedParser, async (req, res) => {
   }
 });
 
-router.post('/insert',urlencodedParser, async (req, res) => {
-  const { id, user_creator_id} = req.body;
+router.post('/insert', urlencodedParser, async (req, res) => {
+  const { id, routine_id, workout_id} = req.body;
   //console.log(req.body);
   try {
-    const newRoutine = await Routine.create({ // criando o usuário
+    const newRoutine_Workout = await Routine_Workout.create({ // criando o Routine_Workout
       id: id,
-      user_creator_id: user_creator_id,
+      routine_id: routine_id,
+      workout_id: workout_id
     });
 
     const response = {
-      newRoutine: newRoutine,
-      message: 'Inserção de Rotina foi efetuada corretamente.',
+      newRoutine_Workout: newRoutine_Workout,
+      message: 'Inserção do Routine_Workout foi efetuada corretamente.',
     }; // retornando o JSON para ver o resultado
 
     res.json(response); // Envie a resposta JSON no caso de sucesso
@@ -87,19 +88,19 @@ router.post('/insert',urlencodedParser, async (req, res) => {
   }
 });
 
-router.post('/update', urlencodedParser, buildRoutine, async (req, res) => {
+router.post('/update', urlencodedParser, buildRoutineWorkouts, async (req, res) => {
   const {id, ...updateClause} = req.clause;
   try {
-    const routine = await Routine.findByPk(id);
-    if (routine) {
-      const updateRoutine = await routine.update(updateClause);
+    const routine_workout = await Routine_Workout.findByPk(id);
+    if (routine_workout) {
+      const updateRoutine_Workout = await routine_workout.update(updateClause);
       const response = {
-        updateRoutine: updateRoutine,
-        message: 'Rotina atualizado com sucesso.',
+        updateRoutine_Workout: updateRoutine_Workout,
+        message: 'Routine_Workout atualizado com sucesso.',
       };
       res.json(response);
     } else {
-      res.json({message: 'Rotina não encontrado.'});
+      res.json({message: 'routine_workout não encontrado.'});
     }
   } catch (error) {
     const response = {

@@ -1,20 +1,20 @@
 const express = require('express');
 const app = express();
-const {Routine, sequelize} = require('../models/routineModel');
+const {Workout_Exercise, sequelize} = require('../models/workout_exerciseModel');
 const router = express.Router();
 var bodyParser = require('body-parser')
-const { buildRoutine } = require('../middlewares/middlewares');
+const { buildWorkoutExercise } = require('../middlewares/middlewares');
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 //mudança do all para depois, em vez de ficar todos os valores id: numero/n, name: nome, ficar só uma lista {numero, nome,...} discutir isso com eles depois
 //USO o urlencodedParser pra deixar todo na tipagem do javascript e deixar mais fácil de mexer
-router.get('/select', urlencodedParser, buildRoutine, async (req, res) => {
+router.get('/select', urlencodedParser, buildWorkoutExercise, async (req, res) => {
   const whereClause = req.clause;
   //console.log(whereClause)
   try{
-      const records = (await Routine.findAll({
+      const records = (await Workout_Exercise.findAll({
         where: whereClause,
       })).map(record => record.toJSON());
 
@@ -38,17 +38,17 @@ router.get('/select', urlencodedParser, buildRoutine, async (req, res) => {
 router.post('/delete', urlencodedParser, async (req, res) => {
   const {id} = req.body;
   try {
-   const numDeleted = await Routine.destroy({
+   const numDeleted = await Workout_Exercise.destroy({
       where: {
         id: id
       }
     });
     console.log(numDeleted);
     if (numDeleted >= 1){
-      res.json({message: "Rotina excluído com sucesso."});
+      res.json({message: "workout_exercise excluído com sucesso."});
     }
     else{
-      res.json({message: "Nenhuma Rotina encontrada com o ID fornecido."});
+      res.json({message: "Nenhum workout_exercise encontrado com o ID fornecido."});
     }
   } catch{
     const response = {
@@ -60,18 +60,27 @@ router.post('/delete', urlencodedParser, async (req, res) => {
   }
 });
 
-router.post('/insert',urlencodedParser, async (req, res) => {
-  const { id, user_creator_id} = req.body;
+router.post('/insert', urlencodedParser, async (req, res) => {
+  const { id, name, login, pass, age, weight, height, sex, obj, xp, routine_id} = req.body;
   //console.log(req.body);
   try {
-    const newRoutine = await Routine.create({ // criando o usuário
+    const newWorkout_Exercise = await Workout_Exercise.create({ // criando o workout_exercise
       id: id,
-      user_creator_id: user_creator_id,
+      name: name,
+      login: login,
+      pass: pass,
+      age: age,
+      weight: weight,
+      height: height,
+      sex: sex,
+      obj: obj,
+      xp: xp,
+      routine_id: routine_id,
     });
 
     const response = {
-      newRoutine: newRoutine,
-      message: 'Inserção de Rotina foi efetuada corretamente.',
+      newWorkout_Exercise: newWorkout_Exercise,
+      message: 'Inserção do workout_exercise foi efetuada corretamente.',
     }; // retornando o JSON para ver o resultado
 
     res.json(response); // Envie a resposta JSON no caso de sucesso
@@ -87,19 +96,19 @@ router.post('/insert',urlencodedParser, async (req, res) => {
   }
 });
 
-router.post('/update', urlencodedParser, buildRoutine, async (req, res) => {
+router.post('/update', urlencodedParser, buildWorkoutExercise, async (req, res) => {
   const {id, ...updateClause} = req.clause;
   try {
-    const routine = await Routine.findByPk(id);
-    if (routine) {
-      const updateRoutine = await routine.update(updateClause);
+    const workout_exercise = await Workout_Exercise.findByPk(id);
+    if (workout_exercise) {
+      const updateWorkout_Exercise = await workout_exercise.update(updateClause);
       const response = {
-        updateRoutine: updateRoutine,
-        message: 'Rotina atualizado com sucesso.',
+        updateWorkout_Exercise: updateWorkout_Exercise,
+        message: 'workout_exercise atualizado com sucesso.',
       };
       res.json(response);
     } else {
-      res.json({message: 'Rotina não encontrado.'});
+      res.json({message: 'workout_exercise não encontrado.'});
     }
   } catch (error) {
     const response = {
