@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulário de Criação de Exercício</title>
+</head>
+<body>
+  <h1>Formulário de Criação de Exercício</h1>
+  <form method="POST" action="/exercise/insert">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id" required>
+    <br>
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="difficulty">Dificuldade:</label>
+    <input type="text" id="difficulty" name="difficulty" required>
+    <br>
+    <label for="sets">Número de Séries:</label>
+    <input type="text" id="sets" name="sets" required>
+    <br>
+    <label for="reps">Número de Repetições:</label>
+    <input type="text" id="reps" name="reps" required>
+    <br>
+    <label for="weight">Peso:</label>
+    <input type="text" id="weight" name="weight" required>
+    <br>
+    <label for="obj">Objetivo:</label>
+    <input type="text" id="obj" name="obj" required>
+    <br>
+    <label for="reps_progress">Progresso de Repetições:</label>
+    <input type="text" id="reps_progress" name="reps_progress" required>
+    <br>
+    <label for="weight_progress">Progresso de Peso:</label>
+    <input type="text" id="weight_progress" name="weight_progress" required>
+    <br>
+    <label for="rest">Descanso:</label>
+    <input type="text" id="rest" name="rest" required>
+    <br>
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>

@@ -28,4 +28,12 @@ router.get('/user_insert', (req, res) => {
     res.sendFile(path.join(__dirname, '../html/routinePlaceholders/routine_selectForm.html'));
   });
 
+  router.get('/routine_delete', (req, res) => {
+    res.sendFile(path.join(__dirname, '../html/userPlaceholders/routine_deleteForm.html'));
+  });
+  
+  router.get('/user_update', (req, res) => {
+    res.sendFile(path.join(__dirname, '../html/userPlaceholders/routine_updateForm.html'));
+  });
+
 module.exports = router;

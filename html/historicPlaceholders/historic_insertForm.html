@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulário de Histórico</title>
+</head>
+<body>
+  <h1>Formulário de Histórico</h1>
+  <form method="POST" action="/historic/insert">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id" required>
+    <br>
+    <label for="user_id">ID do Usuário:</label>
+    <input type="text" id="user_id" name="user_id" required>
+    <br>
+    <label for="days_trained">Dias Treinados:</label>
+    <input type="text" id="days_trained" name="days_trained" required>
+    <br>
+    <label for="weights_lifted">Pesos Levantados:</label>
+    <input type="text" id="weights_lifted" name="weights_lifted" required>
+    <br>
+    <label for="reps_done">Repetições Realizadas:</label>
+    <input type="text" id="reps_done" name="reps_done" required>
+    <br>
+    <label for="time_training">Tempo de Treino:</label>
+    <input type="text" id="time_training" name="time_training" required>
+    <br>
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>

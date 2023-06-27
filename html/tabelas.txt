@@ -1,0 +1,24 @@
+
+tabela 1: exercise
+propriedades: id, name, difficulty, sets, reps, weight, obj, reps_progress, weight_progress, rest.
+
+tabela 2: historic
+propriedades: id, user_id, days_trained, weights_lifted, reps_done, time_training
+
+tabela 3: muscular_group_exercise
+propriedades: id, muscular_group_id, exercise_id
+
+tabela 4: muscular_group
+propriedades: id, name
+
+tabela 5: routine_workout
+propriedades: id, routine_id, workout_id
+
+tabela 6: workout_exercise
+propriedades: id, workout_id, exercise_id
+
+tabela 7: workout_realized
+propriedades: id, date_, duration, , workout_id, historic_id
+
+tabela 8: workout
+propriedades: id, difficulty, obj, user_id

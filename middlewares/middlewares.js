@@ -41,7 +41,7 @@ function buildUser(req, res, next) {
 function buildRoutine(req, res, next) {
   const filterMapping = {
     id: 'id',
-    name: 'user_creator_id'
+    user_creator_id: 'user_creator_id'
   };
 
   buildClause(req, res, next, filterMapping);

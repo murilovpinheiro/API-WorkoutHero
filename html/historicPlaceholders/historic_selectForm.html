@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pesquisa de Histórico</title>
+</head>
+<body>
+  <h1>Pesquisa de Histórico</h1>
+  <form action="/historic/select" method="GET">
+    <label for="id">ID:</label>
+    <input type="number" name="id" id="id">
+    <br>
+    <label for="user_id">ID do Usuário:</label>
+    <input type="number" name="user_id" id="user_id">
+    <br>
+    <label for="days_trained">Dias Treinados:</label>
+    <input type="number" name="days_trained" id="days_trained">
+    <br>
+    <br>
+    <input type="submit" value="Pesquisar">
+  </form>
+</body>
+</html>

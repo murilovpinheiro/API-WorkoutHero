@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulário de Treino</title>
+</head>
+<body>
+  <h1>Formulário de Treino</h1>
+  <form method="POST" action="/workout/insert">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id" required>
+    <br>
+    <label for="difficulty">Dificuldade:</label>
+    <input type="text" id="difficulty" name="difficulty" required>
+    <br>
+    <label for="obj">Objetivo:</label>
+    <input type="text" id="obj" name="obj" required>
+    <br>
+    <label for="user_id">ID do Usuário:</label>
+    <input type="text" id="user_id" name="user_id" required>
+    <br>
+    <button type="submit">Enviar</button>
+  </form>
+</body>
+</html>

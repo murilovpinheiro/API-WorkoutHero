@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pesquisa de Treino Realizado</title>
+</head>
+<body>
+  <h1>Pesquisa de Treino Realizado</h1>
+  <form action="/workout_realized/select" method="GET">
+    <label for="id">ID:</label>
+    <input type="number" name="id" id="id">
+    <br>
+    <label for="date_">Data:</label>
+    <input type="date" name="date_" id="date_">
+    <br>
+    <label for="duration">Duração:</label>
+    <input type="number" name="duration" id="duration">
+    <br>
+    <label for="workout_id">ID do Treino:</label>
+    <input type="number" name="workout_id" id="workout_id">
+    <br>
+    <label for="historic_id">ID do Histórico:</label>
+    <input type="number" name="historic_id" id="historic_id">
+    <br>
+    <br>
+    <input type="submit" value="Pesquisar">
+  </form>
+</body>
+</html>
