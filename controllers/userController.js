@@ -1,17 +1,10 @@
 const express = require('express');
 const app = express();
-const router = express.Router();
+const {User, sequelize} = require('../models/userModel');
 var bodyParser = require('body-parser')
-const { buildUser } = require('../middlewares/middlewares');
 
-var jsonParser = bodyParser.json()
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+class UserController {
 
-class userController {
-    constructor() {
-      this.users = [];
-    }
-  
     async createUser(id, name, login, pass, age, weight, height, sex, obj, xp, routine_id) {
         // Checagens vai ser no banco
 
@@ -51,24 +44,74 @@ class userController {
       }
     }
   
-    async getUserByLogin(login) { ?
-      return this.users.find((user) => user.login === login) || null;
+    async getUserBy(whereClause) {
+        console.log("TESTE");
+        try{
+            const records = (await User.findAll({
+              where: whereClause,
+            })).map(record => record.toJSON());
+      
+            if (records.length === 0) {
+              return {message: "Nenhum registro encontrado."};
+            }else{
+              return records; // Imprima os registros como JSON
+            }
+        }catch(error){
+        // já já mudar o erro para JSON
+            const response = {
+              sql: error.parent.sql,
+              parameters: error.parent.parameters,
+              message: error.original.message,
+            };
+            return response; // Envie a resposta JSON no caso de erro
+            //console.error('Erro ao pesquisar registros:', error);
+        }
     }
   
-    async updateUser(login, updateClause) {
-      const user = this.getUserByLogin(login);
-      if (user) {
-        Object.assign(user, updates);
-      }
+    async updateUser(id, updateClause) {
+        try {
+            const user = await User.findByPk(id);
+            if (user) {
+              const updateUser = await user.update(updateClause);
+              const response = {
+                updateUser: updateUser,
+                message: 'Usuário atualizado com sucesso.',
+              };
+              return response;
+            } else {
+              return {message: 'Usuário não encontrado.'};
+            }
+          } catch (error) {
+            const response = {
+              sql: error.parent.sql,
+              parameters: error.parent.parameters,
+              message: error.original.message,
+            };
+            return response;
+            }
+        }
+
+    async deleteUserBy(id) {
+        try {
+            const numDeleted = await User.destroy({
+               where: { id: id }
+            });
+            //console.log(numDeleted);
+            if (numDeleted >= 1){
+                return {message: "Usuário excluído com sucesso."};
+            }
+            else{
+               return {message: "Nenhum usuário encontrado com o ID fornecido."};
+            }
+            } catch{
+             const response = {
+               sql: error.parent.sql,
+               parameters: error.parent.parameters,
+               message: error.original.message,
+            };
+            return response; // Envie a resposta JSON no caso de erro
+           }
     }
+}
   
-    deleteUser(login) {
-      const index = this.users.findIndex((user) => user.login === login);
-      if (index !== -1) {
-        this.users.splice(index, 1);
-        return true;
-      }
-      return false;
-    }
-  }
-  
+module.exports = UserController;
