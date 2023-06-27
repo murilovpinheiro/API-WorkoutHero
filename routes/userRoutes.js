@@ -1,12 +1,13 @@
 const express = require('express');
 const app = express();
-const UserController = require('../controllers/userController')
+const controller = require('../controllers/userController')
 const router = express.Router();
 var bodyParser = require('body-parser')
 const { buildUser } = require('../middlewares/middlewares');
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+const UserController = new controller();
 
 //mudança do all para depois, em vez de ficar todos os valores id: numero/n, name: nome, ficar só uma lista {numero, nome,...} discutir isso com eles depois
 //USO o urlencodedParser pra deixar todo na tipagem do javascript e deixar mais fácil de mexer
@@ -27,8 +28,8 @@ router.post('/delete', urlencodedParser, async (req, res) => {
   res.json(response)
 });
 
-router.post('/insert', urlencodedParser, async (req, res) => {
-  const { id, name, login, pass, age, weight, height, sex, obj, xp, routine_id} = req.body;
+router.post('/insert', urlencodedParser, buildUser, async (req, res) => {
+  const { id, name, login, pass, age, weight, height, sex, obj, xp, routine_id} = req.clause;
 
   let response = await UserController.createUser(id, name, login, pass, age, weight, height, sex, obj, xp, routine_id);
 

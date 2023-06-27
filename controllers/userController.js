@@ -8,22 +8,31 @@ class UserController {
     async createUser(id, name, login, pass, age, weight, height, sex, obj, xp, routine_id) {
         // Checagens vai ser no banco
 
-        if (idade < 0) {
-            throw new Error("A idade não pode ser negativa.");
-        }
         try {
-            const newUser = await User.create({ // criando o usuário
-                id: id,
-                name: name,
-                login: login,
-                pass: pass,
-                age: age,
-                weight: weight,
-                height: height,
-                sex: sex,
-                obj: obj,
-                xp: xp,
-                routine_id: routine_id,
+            const checkEmptyString = (value) => (value === "") ? null : value;
+
+            // Executa a checagem em cada campo necessário
+            const checkedName = checkEmptyString(name);
+            const checkedLogin = checkEmptyString(login);
+            const checkedPass = checkEmptyString(pass);
+            const checkedSex = checkEmptyString(sex);
+            const checkedObj = checkEmptyString(obj);
+          
+            // Aqui você pode usar os campos verificados para criar o usuário
+            // ou realizar outras operações necessárias
+            // Exemplo:
+            const newUser = await User.create({
+              id: id,
+              name: checkedName,
+              login: checkedLogin,
+              pass: checkedPass,
+              age: age,
+              weight: weight,
+              height: height,
+              sex: checkedSex,
+              obj: checkedObj,
+              xp: xp,
+              routine_id: routine_id
             });
         
             const response = {
@@ -45,7 +54,6 @@ class UserController {
     }
   
     async getUserBy(whereClause) {
-        console.log("TESTE");
         try{
             const records = (await User.findAll({
               where: whereClause,
