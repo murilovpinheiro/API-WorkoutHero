@@ -1,36 +1,38 @@
 -- drop table "ROUTINE", "USER", "USER_CREATES_ROUTINE", "WORKOUT", "ROUTINE_WORKOUTS", "EXERCISE", "WORKOUT_EXERCISE", "MUSCULAR_GROUP" ,"MUSCULAR_GROUP_EXERCISE" ,"HISTORIC", "WORKOUT_REALIZED"
 
+CREATE TYPE "SEX_ENUM" AS ENUM ('M', 'F', 'O');
+
 create table if not exists "ROUTINE"(
 					   id int not null, primary key (id),
 					   user_creator_id int not null);
 
-create table if not exists "USER"(
-					id int not null,
-					name  character varying(80) not null,
-					login character varying(30) not null unique,
-					pass character varying(30) not null,
-					age int not null,
-					weight real not null,
-					height real not null,
-					sex character varying(1),
-					obj character varying(100),
-					xp int,
-					routine_id int,
-					primary key(id),
-					foreign key (routine_id) references "ROUTINE");
+CREATE TABLE IF NOT EXISTS "USER" (
+		id SERIAL PRIMARY KEY,
+		name VARCHAR(80) NOT NULL CHECK (name ~ '^[A-Za-z ]+$'),
+		login VARCHAR(30) NOT NULL UNIQUE,
+		pass VARCHAR(30) NOT NULL,
+		age INT CHECK (age > 0),
+		weight REAL NOT NULL CHECK (weight > 0 AND weight < 200),
+		height REAL NOT NULL CHECK (height >= 0.5 AND height <= 2.5),
+		sex "SEX_ENUM",
+		obj VARCHAR(100),
+		xp INT,
+		routine_id INT,
+		FOREIGN KEY (routine_id) REFERENCES "ROUTINE" (id)
+);
 
 ALTER TABLE "ROUTINE"
 ADD CONSTRAINT fk_user_creator_id
 FOREIGN KEY (user_creator_id) REFERENCES "USER" ON DELETE CASCADE;
 
 
-/* create table if not exists "USER_CREATES_ROUTINE"(
+create table if not exists "USER_CREATES_ROUTINE"(
 							user_id int not null,
 							routine_id int not null,
 							primary key (user_id, routine_id),
 							foreign key (user_id) references "USER",
 							foreign key (routine_id) references "ROUTINE"
-							);*/
+							);
 						
 create table if not exists "WORKOUT"(
 							id int not null,
