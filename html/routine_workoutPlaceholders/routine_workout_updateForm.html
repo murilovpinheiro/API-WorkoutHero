@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Atualização de Rotina de Treino</title>
+</head>
+<body>
+  <h1>Atualização de Rotina de Treino</h1>
+  <form action="/routine_workout/update" method="POST">
+    <label for="id">ID:</label>
+    <input type="number" name="id" id="id" required>
+    <br>
+    <label for="routine_id">ID da Rotina:</label>
+    <input type="number" name="routine_id" id="routine_id">
+    <br>
+    <label for="workout_id">ID do Treino:</label>
+    <input type="number" name="workout_id" id="workout_id">
+    <br>
+    <br>
+    <input type="submit" value="Atualizar">
+  </form>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exclusão de Exercício de Treino</title>
+</head>
+<body>
+  <h1>Exclusão de Exercício de Treino</h1>
+  <form action="/workout_exercise/delete" method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <label for="id">ID do Exercício de Treino:</label>
+    <input type="number" name="id" id="id" placeholder="Digite o ID do Exercício de Treino" required>
+    <br>
+    <input type="submit" value="Deletar">
+  </form>
+</body>
+</html>

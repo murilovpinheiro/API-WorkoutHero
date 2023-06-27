@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Atualização de Exercício</title>
+</head>
+<body>
+  <h1>Atualização de Exercício</h1>
+  <form action="/exercise/update" method="POST">
+    <label for="id">ID:</label>
+    <input type="number" name="id" id="id" required>
+    <br>
+    <label for="name">Nome:</label>
+    <input type="text" name="name" id="name">
+    <br>
+    <label for="difficulty">Dificuldade:</label>
+    <input type="text" name="difficulty" id="difficulty">
+    <br>
+    <label for="sets">Número de Séries:</label>
+    <input type="number" name="sets" id="sets">
+    <br>
+    <label for="reps">Número de Repetições:</label>
+    <input type="number" name="reps" id="reps">
+    <br>
+    <label for="weight">Peso:</label>
+    <input type="number" name="weight" id="weight">
+    <br>
+    <label for="obj">Objetivo:</label>
+    <input type="text" name="obj" id="obj">
+    <br>
+    <label for="reps_progress">Progresso das Repetições:</label>
+    <input type="number" name="reps_progress" id="reps_progress">
+    <br>
+    <label for="weight_progress">Progresso do Peso:</label>
+    <input type="number" name="weight_progress" id="weight_progress">
+    <br>
+    <label for="rest">Descanso:</label>
+    <input type="text" name="rest" id="rest">
+    <br>
+    <br>
+    <input type="submit" value="Atualizar">
+  </form>
+</body>
+</html>

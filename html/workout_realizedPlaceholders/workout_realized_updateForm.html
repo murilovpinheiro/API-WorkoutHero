@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Atualização de Treino Realizado</title>
+</head>
+<body>
+  <h1>Atualização de Treino Realizado</h1>
+  <form action="/workout_realized/update" method="POST">
+    <label for="id">ID:</label>
+    <input type="number" name="id" id="id" required>
+    <br>
+    <label for="date_">Data:</label>
+    <input type="date" name="date_" id="date_">
+    <br>
+    <label for="duration">Duração:</label>
+    <input type="text" name="duration" id="duration">
+    <br>
+    <label for="workout_id">ID do Treino:</label>
+    <input type="number" name="workout_id" id="workout_id">
+    <br>
+    <label for="historic_id">ID do Histórico:</label>
+    <input type="number" name="historic_id" id="historic_id">
+    <br>
+    <br>
+    <input type="submit" value="Atualizar">
+  </form>
+</body>
+</html>

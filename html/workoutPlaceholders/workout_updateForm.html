@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Atualização de Treino</title>
+</head>
+<body>
+  <h1>Atualização de Treino</h1>
+  <form action="/workout/update" method="POST">
+    <label for="id">ID:</label>
+    <input type="number" name="id" id="id" required>
+    <br>
+    <label for="difficulty">Dificuldade:</label>
+    <input type="text" name="difficulty" id="difficulty">
+    <br>
+    <label for="obj">Objetivo:</label>
+    <input type="text" name="obj" id="obj">
+    <br>
+    <label for="user_id">ID do Usuário:</label>
+    <input type="number" name="user_id" id="user_id">
+    <br>
+    <br>
+    <input type="submit" value="Atualizar">
+  </form>
+</body>
+</html>

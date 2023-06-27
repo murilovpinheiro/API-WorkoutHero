@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Atualização de Histórico</title>
+</head>
+<body>
+  <h1>Atualização de Histórico</h1>
+  <form action="/historic/update" method="POST">
+    <label for="id">ID:</label>
+    <input type="number" name="id" id="id" required>
+    <br>
+    <label for="user_id">ID do Usuário:</label>
+    <input type="number" name="user_id" id="user_id">
+    <br>
+    <label for="days_trained">Dias Treinados:</label>
+    <input type="number" name="days_trained" id="days_trained">
+    <br>
+    <label for="weights_lifted">Peso Levantado:</label>
+    <input type="number" name="weights_lifted" id="weights_lifted">
+    <br>
+    <label for="reps_done">Repetições Realizadas:</label>
+    <input type="number" name="reps_done" id="reps_done">
+    <br>
+    <label for="time_training">Tempo de Treinamento:</label>
+    <input type="text" name="time_training" id="time_training">
+    <br>
+    <br>
+    <input type="submit" value="Atualizar">
+  </form>
+</body>
+</html>
