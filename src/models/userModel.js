@@ -45,10 +45,10 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    routine_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
+    //routine_id: {
+    //  type: DataTypes.INTEGER,
+    //  allowNull: true,
+    //},
   },
   {
     sequelize,

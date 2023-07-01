@@ -5,8 +5,8 @@ var bodyParser = require('body-parser')
 
 class UserController {
 
-    async createUser(id, name, login, pass, age, weight, height, sex, obj, xp, routine_id) {
-        // Checagens vai ser no banco
+    async createUser(id, name, login, pass, age, weight, height, sex, obj, xp) { //, routine_id
+         // Checagens vai ser no banco
 
         try {
             const checkEmptyString = (value) => (value === "") ? null : value;
