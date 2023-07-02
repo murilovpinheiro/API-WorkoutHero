@@ -29,8 +29,8 @@ router.post('/register', urlencodedParser, buildUser, async (req, res) => {
   const age = 20;
 
   let response, id = await UserController.registerUser(name, login, pass, age, weight, height, sex);
-  console.log(response)
-  response = await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
+  //console.log()
+  await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
   
   res.json(response);
 });
