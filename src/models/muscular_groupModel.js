@@ -1,6 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../configs/connsequelize');
 
+const {Muscular_Group_Exercise} = require('./muscular_group_exerciseModel');
+const {Exercise} = require('./exerciseModel');
+
 class Muscular_Group extends Model {}
 Muscular_Group.init(
     {

@@ -1,6 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../configs/connsequelize');
 
+const {Exercise} = require('./exerciseModel');
+const {Workout_Exercise} = require('./workout_exerciseModel');
+
 class Workout extends Model {}
 Workout.init(
     {
@@ -30,5 +33,12 @@ Workout.init(
             logging:false
         }
 );
+
+Workout.belongsToMany(Exercise, {
+    through: Workout_Exercise,
+    foreignKey: 'workout_id',
+    otherKey: 'exercise_id',
+    as: 'exerciseList',
+});
 
 module.exports = {Workout, sequelize};

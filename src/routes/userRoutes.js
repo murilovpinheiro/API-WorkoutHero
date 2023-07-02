@@ -20,6 +20,7 @@ router.get('/select', urlencodedParser, buildUser, async (req, res) => {
   //console.log(whereClause)
 });
 
+// esse register pe desnecessário, também, o select insert aceita o obj e xp como vazio, sem problema e o build user já cuida dos vazios
 router.post('/register', urlencodedParser, buildUser, async (req, res) => {
   const {name, login, pass, age, weight, height, sex} = req.body;
 

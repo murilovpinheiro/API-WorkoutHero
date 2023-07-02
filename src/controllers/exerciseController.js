@@ -3,6 +3,8 @@ const app = express();
 const {Exercise, sequelize} = require('../models/exerciseModel');
 var bodyParser = require('body-parser')
 
+const {Muscular_Group} = require('../models/muscular_groupModel');
+
 class ExerciseController{
 
     async createExercise(id, name, difficulty, sets, reps, weight, obj, reps_progress, weight_progress, rest) {
@@ -41,27 +43,32 @@ class ExerciseController{
     }
 
     async getExerciseBy(whereClause) {
-        try{
-            const records = (await Exercise.findAll({
-              where: whereClause,
-            })).map(record => record.toJSON());
-      
-            if (records.length === 0) {
-              return {message: "Nenhum registro encontrado."}
-            }else{
-              return records; 
-            }
-        }catch(error){
-        // já já mudar o erro para JSON
-            const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
-            };
-            return response;
-            //console.error('Erro ao pesquisar registros:', error);
+      try {
+        const records = await Exercise.findAll({
+          where: whereClause,
+          include: {
+            model: Muscular_Group,
+            as: 'muscularGroups',
+          },
+        });
+    
+        if (records.length === 0) {
+          return { message: "Nenhum registro encontrado." };
+        } else {
+          return records.map(record => record.toJSON());
         }
-    }
+      } catch (error) {
+        const response = {
+          message: error.message,
+        };
+        if (error.parent && error.parent.sql) {
+          response.sql = error.parent.sql;
+          response.parameters = error.parent.parameters;
+        }
+        return response;
+      }
+    };
+
     async deleteExerciseBy(id) {
         try {
             const numDeleted = await Exercise.destroy({

@@ -3,6 +3,9 @@ const app = express();
 const {User, sequelize} = require('../models/userModel');
 var bodyParser = require('body-parser')
 
+const { Routine } = require('../models/routineModel');
+const { Workout } = require('../models/workoutModel');
+
 class UserController {
 
     async createUser(id, name, login, pass, age, weight, height, sex, obj, xp) { //, routine_id
@@ -12,7 +15,7 @@ class UserController {
             const checkEmptyString = (value) => (value === "") ? null : value;
 
             // Executa a checagem em cada campo necessário
-            const checkedName = checkEmptyString(name);
+            const checkedName = checkEmptyString(name); //? isso aqui já é feito nos middlewares não precisa ser feito no Controller
             const checkedLogin = checkEmptyString(login);
             const checkedPass = checkEmptyString(pass);
             const checkedSex = checkEmptyString(sex);
@@ -68,7 +71,7 @@ class UserController {
                               if (user.id > lastid){
                                 lastid = user.id
                               }
-                           });;
+                           });; // praq pegar os usuários com os logins iguais?, mas ok
           lastid += 1;
           return await createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0);
           
@@ -87,27 +90,37 @@ class UserController {
     }
   
     async getUserBy(whereClause) {
-        try{
-            const records = (await User.findAll({
-              where: whereClause,
-            })).map(record => record.toJSON());
-      
-            if (records.length === 0) {
-              return {message: "Nenhum registro encontrado."};
-            }else{
-              return records; // Imprima os registros como JSON
+      try {
+        const records = await User.findAll({
+          where: whereClause,
+          include: [{
+            model: Routine,
+            as: 'User_Routine',
+            include: {
+              model: Workout,
+              as: "workoutList"
             }
-        }catch(error){
-        // já já mudar o erro para JSON
-            const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
-            };
-            return response; // Envie a resposta JSON no caso de erro
-            //console.error('Erro ao pesquisar registros:', error);
+          }],
+        });
+    
+        if (records.length === 0) {
+          return { message: "Nenhum registro encontrado." };
+        } else {
+          return records.map(record => record.toJSON());
         }
-    }
+      } catch (error) {
+        const response = {
+          message: error.message,
+        };
+        if (error.parent && error.parent.sql) {
+          response.sql = error.parent.sql;
+          response.parameters = error.parent.parameters;
+        }
+        return response;
+      }
+    };
+    
+  
   
     async updateUser(id, updateClause) {
         try {

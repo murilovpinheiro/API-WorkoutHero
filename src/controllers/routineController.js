@@ -3,6 +3,8 @@ const app = express();
 const {Routine, sequelize} = require('../models/routineModel');
 var bodyParser = require('body-parser')
 
+const {Workout} = require('../models/workoutModel');
+
 class RoutineController{
 
     async createRoutine( id, user_creator_id) {
@@ -30,29 +32,28 @@ class RoutineController{
           }
     }
 
-    async getRoutineBy(whereClause) {
-        try{
-            const records = (await Routine.findAll({
-              where: whereClause,
-            })).map(record => record.toJSON());
-      
-            if (records.length === 0) {
-              return {message: "Nenhum registro encontrado."}
-            }else{
-              return records; // Imprima os registros como JSON
-            }
-        }catch(error){
-        // já já mudar o erro para JSON
-            const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
-            };
-            return (response); // Envie a resposta JSON no caso de erro
-            //console.error('Erro ao pesquisar registros:', error);
-        }
-    }
-
+    async getRoutineWorkoutsBy(whereClause) {
+      try{
+          const records = (await Routine_Workouts.findAll({
+            where: whereClause,
+          })).map(record => record.toJSON());
+    
+          if (records.length === 0) {
+            return {message: "Nenhum registro encontrado."}
+          }else{
+            return records; // Imprima os registros como JSON
+          }
+      }catch(error){
+      // já já mudar o erro para JSON
+          const response = {
+            sql: error.parent.sql,
+            parameters: error.parent.parameters,
+            message: error.original.message,
+          };
+          return response; // Envie a resposta JSON no caso de erro
+          //console.error('Erro ao pesquisar registros:', error);
+      }
+  }
     async deleteRoutineBy(id) {
         try {
             const numDeleted = await Routine.destroy({

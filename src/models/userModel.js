@@ -1,6 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../configs/connsequelize');
 
+const { Routine } = require('./routineModel');
+
 class User extends Model {}
 User.init(
   {
@@ -45,10 +47,10 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    //routine_id: {
-    //  type: DataTypes.INTEGER,
-    //  allowNull: true,
-    //},
+    routine_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     sequelize,
@@ -58,5 +60,7 @@ User.init(
     logging:false
   }
 );
+
+User.belongsTo(Routine, { foreignKey: 'routine_id', as: "User_Routine"});
 
 module.exports = {User, sequelize};
