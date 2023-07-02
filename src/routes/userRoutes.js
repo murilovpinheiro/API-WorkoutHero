@@ -40,14 +40,6 @@ router.post('/register', urlencodedParser, buildUser, async (req, res) => {
   res.json(response);
 });
 
-router.post('/delete', urlencodedParser, async (req, res) => {
-  const {id} = req.body;
-
-  let response = await UserController.deleteUserBy(id);
-
-  res.json(response)
-});
-
 router.post('/insert', urlencodedParser, buildUser, async (req, res) => {
   const { id, name, login, pass, age, weight, height, sex, obj, xp} = req.clause;
 
@@ -56,6 +48,14 @@ router.post('/insert', urlencodedParser, buildUser, async (req, res) => {
   res.json(response);
   //console.log(req.body);
   
+});
+router.get('/select', urlencodedParser, buildUser, async (req, res) => {
+  const whereClause = req.clause;
+
+  let response = await UserController.getUserBy(whereClause);
+  
+  res.json(response);
+  //console.log(whereClause)
 });
 
 router.post('/update', urlencodedParser, buildUser, async (req, res) => {

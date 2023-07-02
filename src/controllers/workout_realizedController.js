@@ -6,6 +6,8 @@ const { Workout } = require('../models/workoutModel');
 const { Historic } = require('../models/historicModel');
 const { Workout_Exercise } = require('../models/workout_exerciseModel');
 const { Exercise } = require('../models/exerciseModel');
+const { User } = require('../models/userModel');
+
 
 class WorkoutRealizedController{
 
@@ -23,7 +25,8 @@ class WorkoutRealizedController{
             const historic = await Historic.findOne({ where: { id: historic_id } });
             if (historic) {
               const workout = await Workout.findOne({where: { id: workout_id }});
-              console.log(workout)
+              const user = await User.findOne({where:{id: historic.user_id}});
+              console.log(user)
 
               const workout_exercise = await Workout_Exercise.findAll({where: { workout_id: workout.id }});
               //console.log(workout_exercise)
@@ -33,10 +36,8 @@ class WorkoutRealizedController{
               workout_exercise.forEach((item) => {
                 exercise_ids.push(item.exercise_id); // Adicionar o exercise_id à lista
               });
-              console.log(exercise_ids)
               
               const exerciseList = await Exercise.findAll({ where: { id: exercise_ids } });
-              console.log(exerciseList)
               
               const sum_reps = exerciseList.reduce((accumulator, exercise) => accumulator + (exercise.reps * exercise.sets), 0);
               //const sum_wgt = exerciseList.reduce((accumulator, exercise) => accumulator + (exercise.weights_lifted), 0);
@@ -49,6 +50,8 @@ class WorkoutRealizedController{
               historic.reps_done += sum_reps
               historic.days_trained += 1
               historic.time_training += 1 // considerando todos os exercícios de 1 hora de duração
+              user.xp += (sum_reps * 30 * 1000) / historic.days_trained // quanto mais tempo treinando menos XP ele ganha
+              await user.save();
               await historic.save();
             }
         

@@ -42,7 +42,7 @@ Historic.init(
   }
 );
 
-Historic.belongsTo(User, { foreignKey: 'user_id', as: "historicUser"});
+Historic.belongsTo(User, { foreignKey: 'user_id', as: "userInformation"});
 
 
 module.exports = {Historic, sequelize};

@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const {Historic, sequelize} = require('../models/historicModel');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+const { User } = require('../models/userModel');
 
 
 
@@ -38,26 +39,30 @@ class HistoricController{
     }
 
     async getHistoricBy(whereClause) {
-        try{
-            const records = (await Historic.findAll({
-              where: whereClause,
-            })).map(record => record.toJSON());
-      
-            if (records.length === 0) {
-              return {message: "Nenhum registro encontrado."}
-            }else{
-              return records; // Imprima os registros como JSON
-            }
-        }catch(error){
-        // já já mudar o erro para JSON
-            const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
-            };
-            return response; // Envie a resposta JSON no caso de erro
-            //console.error('Erro ao pesquisar registros:', error);
+      try {
+        const records = await Historic.findAll({
+          where: whereClause,
+          include: {
+            model: User,
+            as: 'userInformation',
+          },
+        });
+    
+        if (records.length === 0) {
+          return { message: "Nenhum registro encontrado." };
+        } else {
+          return records.map(record => record.toJSON());
         }
+      } catch (error) {
+        const response = {
+          message: error.message,
+        };
+        if (error.parent && error.parent.sql) {
+          response.sql = error.parent.sql;
+          response.parameters = error.parent.parameters;
+        }
+        return response;
+      }
     }
     async deleteHistoricBy(id) {
         try {

@@ -32,7 +32,7 @@ class RoutineController{
           }
     }
 
-    async getRoutineWorkoutsBy(whereClause) {
+    async getRoutineBy(whereClause) {
       try{
           const records = (await Routine_Workouts.findAll({
             where: whereClause,
