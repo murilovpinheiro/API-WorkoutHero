@@ -31,7 +31,7 @@ function buildUser(req, res, next) {
     sex: 'sex',
     obj: 'obj',
     xp: 'xp',
-    routine_id: 'routine_id'
+    //routine_id: 'routine_id'
   };
 
   buildClause(req, res, next, filterMapping);
