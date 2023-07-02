@@ -12,7 +12,6 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 const UserController = new controller();
 const HistoricController = new historic();
 
-
 //mudança do all para depois, em vez de ficar todos os valores id: numero/n, name: nome, ficar só uma lista {numero, nome,...} discutir isso com eles depois
 //USO o urlencodedParser pra deixar todo na tipagem do javascript e deixar mais fácil de mexer
 router.get('/select', urlencodedParser, buildUser, async (req, res) => {
@@ -30,6 +29,7 @@ router.post('/register', urlencodedParser, buildUser, async (req, res) => {
   const age = 20;
 
   let response, id = await UserController.registerUser(name, login, pass, age, weight, height, sex);
+  console.log(response)
   response = await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
   
   res.json(response);
