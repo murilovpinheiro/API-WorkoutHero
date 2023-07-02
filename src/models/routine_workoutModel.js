@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../configs/connsequelize');
 
-class Routine_Workouts extends Model {}
+class Routine_Workout extends Model {}
 Routine_Workouts.init(
     {
         id: {
@@ -20,11 +20,11 @@ Routine_Workouts.init(
     },
         {
             sequelize,
-            modelName: "Routine_Workouts",
-            tableName: "ROUTINE_WORKOUTS",
+            modelName: "Routine_Workout",
+            tableName: "ROUTINE_WORKOUT",
             timestamps: false,
             logging:false
         }
 );
 
-module.exports = {Routine_Workouts, sequelize};
+module.exports = {Routine_Workout, sequelize};

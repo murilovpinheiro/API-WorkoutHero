@@ -5,20 +5,12 @@ var bodyParser = require('body-parser')
 
 class WorkoutExerciseController{
 
-    async createWorkoutExercise( id, name, login, pass, age, weight, height, sex, obj, xp, routine_id) {
+    async createWorkoutExercise( id, workout_id, exercise_id) {
         try {
             const newWorkout_Exercise = await Workout_Exercise.create({ // criando o workout_exercise
-              id: id,
-              name: name,
-              login: login,
-              pass: pass,
-              age: age,
-              weight: weight,
-              height: height,
-              sex: sex,
-              obj: obj,
-              xp: xp,
-              routine_id: routine_id,
+              id: id, 
+              workout_id: workout_id,
+              exercise_id: exercise_id
             });
         
             const response = {

@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const {Routine_Workout, sequelize} = require('../models/routine_workoutsModel');
+const {Routine_Workout, sequelize} = require('../models/routine_workoutModel');
 var bodyParser = require('body-parser')
 
 class RoutineWorkoutController{

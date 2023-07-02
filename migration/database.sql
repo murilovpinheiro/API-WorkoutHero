@@ -45,7 +45,7 @@ create table if not exists "WORKOUT"(
 							check (difficulty IN ('E', 'M', 'H')) -- por enquanto fica assim, no futuro talvez adicione uma função para modificar
 							);
 						
-create table if not exists "ROUTINE_WORKOUTS"(
+create table if not exists "ROUTINE_WORKOUT"(
 											  id int not null,
 											  routine_id int not null,
 											  workout_id int not null,

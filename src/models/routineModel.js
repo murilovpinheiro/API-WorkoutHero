@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../configs/connsequelize');
 
 const {Workout} = require('./workoutModel');
-const {Routine_Workouts} = require("./routine_workoutsModel")
+const {Routine_Workouts} = require("./routine_workoutModel")
 
 class Routine extends Model {}
 Routine.init(
