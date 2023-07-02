@@ -37,8 +37,7 @@ class UserController {
         
             const response = {
                 newUser: newUser,
-                message: 'Inserção do usuário foi efetuada corretamente.',
-            }; // retornando o JSON para ver o resultado
+            };
 
             return response; // Envie a resposta JSON no caso de sucesso
         } catch (error) {
