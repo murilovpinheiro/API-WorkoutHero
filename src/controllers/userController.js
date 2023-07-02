@@ -9,7 +9,6 @@ class UserController {
     async createUser(id, name, login, pass, age, weight, height, sex, obj, xp) { //, routine_id
          // Checagens vai ser no banco
         
-        console.log(id, name, login, pass, age, weight, height, sex, obj, xp)
         try {
             const checkEmptyString = (value) => (value === "") ? null : value;
 
