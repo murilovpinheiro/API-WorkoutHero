@@ -5,11 +5,12 @@ var bodyParser = require('body-parser');
 const { Workout } = require('../models/workoutModel');
 const { Historic } = require('../models/historicModel');
 const { Workout_Exercise } = require('../models/workout_exerciseModel');
-
+const { Exercise } = require('../models/exerciseModel');
 
 class WorkoutRealizedController{
 
     async createWorkoutRealized( id, date_, duration, workout_id, historic_id) {
+      console.log( id, date_, duration, workout_id, historic_id)
         try {
             const newWorkout_Realized = await Workout_Realized.create({ // criando o workout_realized
               id: id,
@@ -21,23 +22,30 @@ class WorkoutRealizedController{
 
             const historic = await Historic.findOne({ where: { id: historic_id } });
             if (historic) {
-              historic.days_trained += 1;
               const workout = await Workout.findOne({where: { id: workout_id }});
+              console.log(workout)
+
               const workout_exercise = await Workout_Exercise.findAll({where: { workout_id: workout.id }});
+              //console.log(workout_exercise)
               
               let exercise_ids = []; // Lista para armazenar os exercise_ids
 
               workout_exercise.forEach((item) => {
                 exercise_ids.push(item.exercise_id); // Adicionar o exercise_id à lista
               });
-
-              const exerciseList = await Exercise.findAll({ where: { id: exercise_ids } });
-              const sum_reps = exerciseList.reduce((accumulator, exercise) => accumulator + (exercise.reps * exercise.sets), 0);
-              const sum_wgt = exerciseList.reduce((accumulator, exercise) => accumulator + (exercise.reps * exercise.sets *  exercise.weights_lifted), 0);
+              console.log(exercise_ids)
               
+              const exerciseList = await Exercise.findAll({ where: { id: exercise_ids } });
+              console.log(exerciseList)
+              
+              const sum_reps = exerciseList.reduce((accumulator, exercise) => accumulator + (exercise.reps * exercise.sets), 0);
+              //const sum_wgt = exerciseList.reduce((accumulator, exercise) => accumulator + (exercise.weights_lifted), 0);
+             
+              console.log(historic.weights_lifted)
+              console.log(historic.reps_done)
+              console.log(historic.days_trained)
 
-
-              historic.weights_lifted += sum_wgt
+              historic.weights_lifted += 30
               historic.reps_done += sum_reps
               historic.days_trained += 1
               historic.time_training += 1 // considerando todos os exercícios de 1 hora de duração
