@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../configs/connsequelize');
 
 const {Workout} = require('./workoutModel');
-const {Routine_Workouts} = require("./routine_workoutModel")
+const {Routine_Workout} = require("./routine_workoutModel")
 
 class Routine extends Model {}
 Routine.init(
@@ -24,9 +24,8 @@ Routine.init(
             logging:false
         }
 );
-
 Routine.belongsToMany(Workout, {
-    through: Routine_Workouts,
+    through: Routine_Workout,
     foreignKey: 'routine_id',
     otherKey: 'workout_id',
     as: 'workoutList',

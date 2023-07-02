@@ -3,7 +3,6 @@ const app = express();
 const {User, sequelize} = require('../models/userModel');
 var bodyParser = require('body-parser')
 
-const { Routine } = require('../models/routineModel');
 const { Workout } = require('../models/workoutModel');
 
 class UserController {
@@ -96,7 +95,7 @@ class UserController {
     async getUserBy(whereClause) {
       try {
         const records = await User.findAll({
-          where: whereClause,
+          where: whereClause
           /*include: [{
             model: Routine,
             as: 'User_Routine',
