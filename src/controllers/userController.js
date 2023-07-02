@@ -87,8 +87,7 @@ class UserController {
       }
       catch(error){
         const response = {
-          parameters: error.parent.parameters,
-          message: error.original.message,
+          message: error.message,
         };
         return response; 
       }
