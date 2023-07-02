@@ -20,6 +20,15 @@ router.get('/select', urlencodedParser, buildUser, async (req, res) => {
   //console.log(whereClause)
 });
 
+router.get('/register', urlencodedParser, buildUser, async (req, res) => {
+  const {name, login, pass, age, weight, height, sex} = req.clause;
+
+  let response = await UserController.registerUser(name, login, pass, age, weight, height, sex);
+  
+  res.json(response);
+  //console.log(whereClause)
+});
+
 router.post('/delete', urlencodedParser, async (req, res) => {
   const {id} = req.body;
 
@@ -29,9 +38,9 @@ router.post('/delete', urlencodedParser, async (req, res) => {
 });
 
 router.post('/insert', urlencodedParser, buildUser, async (req, res) => {
-  const { id, name, login, pass, age, weight, height, sex, obj, xp, routine_id} = req.clause;
+  const { id, name, login, pass, age, weight, height, sex, obj, xp} = req.clause;
 
-  let response = await UserController.createUser(id, name, login, pass, age, weight, height, sex, obj, xp, routine_id);
+  let response = await UserController.createUser(id, name, login, pass, age, weight, height, sex, obj, xp);
 
   res.json(response);
   //console.log(req.body);

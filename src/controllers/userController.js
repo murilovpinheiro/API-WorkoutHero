@@ -52,6 +52,40 @@ class UserController {
             return response; // Envie a resposta JSON no caso de erro
       }
     }
+
+    async registerUser(name, login, pass, age, weight, height, sex){
+      try{
+        whereClause = {
+          login: login 
+        }
+        const usersWithSameLogin = (await User.findAll({
+          where: whereClause,
+        })).map(usersWithSameLogin => usersWithSameLogin.toJSON());
+        if (usersWithSameLogin.length === 0) {
+          lastid = 0;
+          const allUsers = (await User.findAll())
+                           .map(usersWithSameLogin => usersWithSameLogin.toJSON())
+                           .forEach(user => {
+                              if (user.id > lastid){
+                                lastid = user.id
+                              }
+                           });;
+          lastid += 1;
+          return await createUser(lastid, name, login, pass, age, weight, height, sex, "", 0);
+          
+        }else{
+          return {message: "Já existe um usuário com este login!."}
+        }
+      }
+      catch(error){
+        const response = {
+          sql: error.parent.sql,
+          parameters: error.parent.parameters,
+          message: error.original.message,
+        };
+        return response; 
+      }
+    }
   
     async getUserBy(whereClause) {
         try{
