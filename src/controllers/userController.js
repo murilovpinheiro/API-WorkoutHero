@@ -70,7 +70,7 @@ class UserController {
                               }
                            });;
           lastid += 1;
-          return await createUser(lastid, name, login, pass, age, weight, height, sex, "", 0);
+          return await createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0);
           
         }else{
           return {message: "Já existe um usuário com este login!."}
