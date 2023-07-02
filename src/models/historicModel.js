@@ -1,6 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../configs/connsequelize');
 
+const { User } = require('../models/userModel');
+
+
 class Historic extends Model {}
 Historic.init(
   {
@@ -38,5 +41,8 @@ Historic.init(
     logging:false
   }
 );
+
+Historic.belongsTo(User, { foreignKey: 'user_id', as: "historicUser"});
+
 
 module.exports = {Historic, sequelize};

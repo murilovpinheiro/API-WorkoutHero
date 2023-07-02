@@ -30,7 +30,9 @@ router.post('/register', urlencodedParser, buildUser, async (req, res) => {
   console.log("Criando USer")
   let response, id = await UserController.registerUser(name, login, pass, age, weight, height, sex);
   console.log("Criando Hist")
+  console.log(id)
   console.log(response)
+
 
   await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
   console.log("Deu bom")

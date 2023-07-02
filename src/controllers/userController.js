@@ -76,11 +76,11 @@ class UserController {
                            });;
           lastid += 1;
           console.log("Novo id encontrado: " + lastid)
-          return await this.createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0), lastid;
+          return await this.createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0), await lastid;
           
         }else{
           console.log("Foi encontrado um usuário com o login: " + login)
-          return {message: "Já existe um usuário com este login!."}
+          return {message: "Já existe um usuário com este login!."}, null
         }
       }
       catch(error){
