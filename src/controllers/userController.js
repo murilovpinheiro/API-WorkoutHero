@@ -56,7 +56,7 @@ class UserController {
 
     async registerUser(name, login, pass, age, weight, height, sex){
       try{
-        whereClause = {
+        const whereClause = {
           login: login 
         }
         console.log("Procurando outros usuários com login: " + login)
