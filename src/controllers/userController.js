@@ -60,28 +60,33 @@ class UserController {
         whereClause = {
           login: login 
         }
+        console.log("Procurando outros usuários com login: " + login)
         const usersWithSameLogin = (await User.findAll({
           where: whereClause,
         })).map(usersWithSameLogin => usersWithSameLogin.toJSON());
         if (usersWithSameLogin.length === 0) {
+          console.log("Não foi encontrado outros usuários com login: " + login)
           lastid = 0;
-          const allUsers = (await User.findAll())
-                           .map(usersWithSameLogin => usersWithSameLogin.toJSON())
-                           .forEach(user => {
+          console.log("Buscando usuário de maior id.")
+          const allUsers = (await User.findAll()).map(usersWithSameLogin => usersWithSameLogin.toJSON());
+          
+          allUsers.forEach(user => {
                               if (user.id > lastid){
                                 lastid = user.id
+                                console.log("Maior id atual: " + lastid)
                               }
-                           });; // praq pegar os usuários com os logins iguais?, mas ok
+                           });;
           lastid += 1;
+          console.log("Novo id encontrado: " + lastid)
           return await createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0);
           
         }else{
+          console.log("Foi encontrado um usuário com o login: " + login)
           return {message: "Já existe um usuário com este login!."}
         }
       }
       catch(error){
         const response = {
-          sql: error.parent.sql,
           parameters: error.parent.parameters,
           message: error.original.message,
         };
