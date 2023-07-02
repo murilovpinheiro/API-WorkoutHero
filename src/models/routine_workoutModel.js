@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../configs/connsequelize');
 
 class Routine_Workout extends Model {}
-Routine_Workouts.init(
+Routine_Workout.init(
     {
         id: {
             type: DataTypes.INTEGER,
