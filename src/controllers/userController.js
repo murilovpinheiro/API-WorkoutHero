@@ -97,14 +97,14 @@ class UserController {
       try {
         const records = await User.findAll({
           where: whereClause,
-          include: [{
+          /*include: [{
             model: Routine,
             as: 'User_Routine',
             include: {
               model: Workout,
               as: "workoutList"
             }
-          }],
+          }],*/
         });
     
         if (records.length === 0) {
