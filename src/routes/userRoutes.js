@@ -4,7 +4,7 @@ const controller = require('../controllers/userController')
 const router = express.Router();
 var bodyParser = require('body-parser')
 const { buildUser } = require('../middlewares/middlewares');
-const {historic} = require("../controllers/historicController")
+const historic = require("../controllers/historicController")
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
