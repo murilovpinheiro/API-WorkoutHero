@@ -1,6 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../configs/connsequelize');
 
+const {Workout} = require('./workoutModel');
+const {Historic} = require('./historicModel');
+
+
 class Workout_Realized extends Model {}
 Workout_Realized.init(
   {
@@ -34,5 +38,9 @@ Workout_Realized.init(
     logging:false
   }
 );
+
+Workout_Realized.belongsTo(Workout, { foreignKey: 'workout_id', as: "workout_realized_workout"});
+Workout_Realized.belongsTo(Historic, { foreignKey: 'historic_id', as: "workout_realized_historic"});
+
 
 module.exports = {Workout_Realized, sequelize};

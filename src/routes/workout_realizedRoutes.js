@@ -41,4 +41,13 @@ router.post('/update', urlencodedParser, buildWorkoutRealized, async (req, res) 
   res.json(response)
 });
 
+router.get('/getStats', urlencodedParser, buildWorkoutRealized, async (req, res)=> {
+  const whereClause = req.clause;
+  //console.log(whereClause)
+  let response = await WorkoutRealizedController.getWorkoutRealizedBy(whereClause)
+  console.log(response)
+  res.json(response)
+})
+
+
 module.exports = router

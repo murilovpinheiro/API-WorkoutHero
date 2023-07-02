@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express();
 const {Workout_Realized, sequelize} = require('../models/workout_realizedModel');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+const { Workout } = require('../models/workoutModel');
+const { Historic } = require('../models/historicModel');
+const { Workout_Exercise } = require('../models/workout_exerciseModel');
+
 
 class WorkoutRealizedController{
 
@@ -14,6 +18,31 @@ class WorkoutRealizedController{
               workout_id: workout_id,
               historic_id: historic_id
             });
+
+            const historic = await Historic.findOne({ where: { id: historic_id } });
+            if (historic) {
+              historic.days_trained += 1;
+              const workout = await Workout.findOne({where: { id: workout_id }});
+              const workout_exercise = await Workout_Exercise.findAll({where: { workout_id: workout.id }});
+              
+              let exercise_ids = []; // Lista para armazenar os exercise_ids
+
+              workout_exercise.forEach((item) => {
+                exercise_ids.push(item.exercise_id); // Adicionar o exercise_id à lista
+              });
+
+              const exerciseList = await Exercise.findAll({ where: { id: exercise_ids } });
+              const sum_reps = exerciseList.reduce((accumulator, exercise) => accumulator + (exercise.reps * exercise.sets), 0);
+              const sum_wgt = exerciseList.reduce((accumulator, exercise) => accumulator + (exercise.reps * exercise.sets *  exercise.weights_lifted), 0);
+              
+
+
+              historic.weights_lifted += sum_wgt
+              historic.reps_done += sum_reps
+              historic.days_trained += 1
+              historic.time_training += 1 // considerando todos os exercícios de 1 hora de duração
+              await historic.save();
+            }
         
             const response = {
               newWorkout_Realized: newWorkout_Realized,
@@ -34,26 +63,34 @@ class WorkoutRealizedController{
     }
 
     async getWorkoutRealizedBy(whereClause) {
-        try{
-            const records = (await Workout_Realized.findAll({
-              where: whereClause,
-            })).map(record => record.toJSON());
-      
-            if (records.length === 0) {
-              return {message: "Nenhum registro encontrado."}
-            }else{
-              return records; // Imprima os registros como JSON
-            }
-        }catch(error){
-        // já já mudar o erro para JSON
-            const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
-            };
-            return response; // Envie a resposta JSON no caso de erro
-            //console.error('Erro ao pesquisar registros:', error);
+      try {
+        const records = await Workout_Realized.findAll({
+          where: whereClause,
+          include: {
+            model: Workout,
+            as: 'workout_realized_workout'
+          },
+          include: {
+            model: Historic,
+            as: 'workout_realized_historic'
+          },
+        });
+    
+        if (records.length === 0) {
+          return { message: "Nenhum registro encontrado." };
+        } else {
+          return records.map(record => record.toJSON());
         }
+      } catch (error) {
+        const response = {
+          message: error.message,
+        };
+        if (error.parent && error.parent.sql) {
+          response.sql = error.parent.sql;
+          response.parameters = error.parent.parameters;
+        }
+        return response;
+      }
     }
 
     async deleteWorkoutRealizedBy(id) {

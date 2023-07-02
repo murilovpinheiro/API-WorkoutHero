@@ -7,6 +7,9 @@ const { buildUser } = require('../middlewares/middlewares');
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+
+const HistoricController = require("../controllers/historicController")
 const UserController = new controller();
 
 //mudança do all para depois, em vez de ficar todos os valores id: numero/n, name: nome, ficar só uma lista {numero, nome,...} discutir isso com eles depois
@@ -25,7 +28,9 @@ router.post('/register', urlencodedParser, buildUser, async (req, res) => {
   const {name, login, pass, weight, height, sex} = req.clause;
   const age = 20;
 
-  let response = await UserController.registerUser(name, login, pass, age, weight, height, sex);
+  let response, id = await UserController.registerUser(name, login, pass, age, weight, height, sex);
+  
+  response = await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0)
   
   res.json(response);
 });
