@@ -4,13 +4,14 @@ const controller = require('../controllers/userController')
 const router = express.Router();
 var bodyParser = require('body-parser')
 const { buildUser } = require('../middlewares/middlewares');
+const {historic} = require("../controllers/historicController")
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-
-const HistoricController = require("../controllers/historicController")
 const UserController = new controller();
+const HistoricController = new historic();
+
 
 //mudança do all para depois, em vez de ficar todos os valores id: numero/n, name: nome, ficar só uma lista {numero, nome,...} discutir isso com eles depois
 //USO o urlencodedParser pra deixar todo na tipagem do javascript e deixar mais fácil de mexer
@@ -29,8 +30,7 @@ router.post('/register', urlencodedParser, buildUser, async (req, res) => {
   const age = 20;
 
   let response, id = await UserController.registerUser(name, login, pass, age, weight, height, sex);
-  
-  response = await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0)
+  response = await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
   
   res.json(response);
 });

@@ -22,7 +22,7 @@ router.get('/select', urlencodedParser, buildHistoric, async (req, res) => {
 
 router.post('/delete', urlencodedParser, async (req, res) => {
   const {id} = req.body;
-  let response = await HistoricController.deketeHistoricBy(id)
+  let response = await HistoricController.deleteHistoricBy(id)
   res.json(response)
 });
 
@@ -30,7 +30,7 @@ router.post('/insert', urlencodedParser, async (req, res) => {
   const { id, user_id, days_trained, weights_lifted, reps_done, time_training} = req.body;
   //console.log(req.body);
   
-  let response = await HistoricController.createHistoric(id, user_id, days_trained, weights_lifted, reps_done, time_trainingd)
+  let response = await HistoricController.createHistoric(id, user_id, days_trained, weights_lifted, reps_done, time_training)
   res.json(response)
 
 });
