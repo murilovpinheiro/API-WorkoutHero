@@ -35,7 +35,7 @@ class UserController {
               sex: checkedSex,
               obj: checkedObj,
               xp: xp,
-              routine_id: routine_id
+              //routine_id: routine_id
             });
         
             const response = {
