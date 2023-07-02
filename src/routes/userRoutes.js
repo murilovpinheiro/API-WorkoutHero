@@ -27,11 +27,11 @@ router.get('/select', urlencodedParser, buildUser, async (req, res) => {
 router.post('/register', urlencodedParser, buildUser, async (req, res) => {
   const {name, login, pass, weight, height, sex} = req.clause;
   const age = 20;
-
+  console.log("Criando USer")
   let response, id = await UserController.registerUser(name, login, pass, age, weight, height, sex);
-  //console.log()
+  console.log("Criando Hist")
   await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
-  
+  console.log("Deu bom")
   res.json(response);
 });
 
