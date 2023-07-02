@@ -20,7 +20,7 @@ router.get('/select', urlencodedParser, buildUser, async (req, res) => {
   //console.log(whereClause)
 });
 
-router.get('/register', urlencodedParser, buildUser, async (req, res) => {
+router.post('/register', urlencodedParser, buildUser, async (req, res) => {
   const {name, login, pass, age, weight, height, sex} = req.clause;
 
   let response = await UserController.registerUser(name, login, pass, age, weight, height, sex);
