@@ -23,7 +23,7 @@ class HistoricController{
               newHistoric: newHistoric,
               message: 'Inserção do histórico foi efetuada corretamente.',
             }; // retornando o JSON para ver o resultado
-        
+              
             return response; // Envie a resposta JSON no caso de sucesso
           } catch (error) {
             //Caso dê erro a gente pega o erro e mostra, para ajudar tratamento e debug futuros :)
