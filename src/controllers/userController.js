@@ -95,7 +95,7 @@ class UserController {
     async getUserBy(whereClause) {
       try {
         const records = await User.findAll({
-          where: whereClause
+          where: whereClause,
           /*include: [{
             model: Routine,
             as: 'User_Routine',

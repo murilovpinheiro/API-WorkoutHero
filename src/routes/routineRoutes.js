@@ -32,6 +32,7 @@ router.post('/insert',urlencodedParser, async (req, res) => {
   //console.log(req.body);
 
   let response = await RoutineController.createRoutine(id, user_creator_id)
+  
   res.json(response)
 });
 

@@ -62,5 +62,6 @@ User.init(
 );
 
 // User.belongsTo(Routine, { foreignKey: 'routine_id', as: "User_Routine"});
+//User.removeAssociation(Routine, 'User_Routine');
 
 module.exports = {User, sequelize};
