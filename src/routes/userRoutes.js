@@ -22,7 +22,8 @@ router.get('/select', urlencodedParser, buildUser, async (req, res) => {
 
 // esse register pe desnecessário, também, o select insert aceita o obj e xp como vazio, sem problema e o build user já cuida dos vazios
 router.post('/register', urlencodedParser, buildUser, async (req, res) => {
-  const {name, login, pass, age, weight, height, sex} = req.clause;
+  const {name, login, pass, weight, height, sex} = req.clause;
+  const age = 20;
 
   let response = await UserController.registerUser(name, login, pass, age, weight, height, sex);
   
