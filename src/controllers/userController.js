@@ -77,7 +77,7 @@ class UserController {
                            });;
           lastid += 1;
           console.log("Novo id encontrado: " + lastid)
-          return await createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0);
+          return await this.createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0);
           
         }else{
           console.log("Foi encontrado um usuário com o login: " + login)
