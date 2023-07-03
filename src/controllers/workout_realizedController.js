@@ -14,7 +14,7 @@ class WorkoutRealizedController{
     async createWorkoutRealized(date_, duration, workout_id, historic_id) {
       console.log(workout_id, historic_id)
         try {
-            const lastid = 0;
+            let lastid = 0;
             const allWorkouts = (await Workout_Realized.findAll()).map(workout => workout.toJSON());
           
             allWorkouts.forEach(workout => {
