@@ -11,11 +11,21 @@ const { User } = require('../models/userModel');
 
 class WorkoutRealizedController{
 
-    async createWorkoutRealized( id, date_, duration, workout_id, historic_id) {
-      console.log( id, date_, duration, workout_id, historic_id)
+    async createWorkoutRealized(date_, duration, workout_id, historic_id) {
+      console.log(workout_id, historic_id)
         try {
+            const lastid = 0;
+            const allWorkouts = (await Workout_Realized.findAll()).map(workout => workout.toJSON());
+          
+            allWorkouts.forEach(workout => {
+                                if (workout.id > lastid){
+                                  lastid = workout.id
+                                  console.log("Maior id atual: " + lastid)
+                                }
+                             });;
+
             const newWorkout_Realized = await Workout_Realized.create({ // criando o workout_realized
-              id: id,
+              id: lastid,
               date_ : date_,
               duration: duration,
               workout_id: workout_id,

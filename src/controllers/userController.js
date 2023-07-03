@@ -66,7 +66,7 @@ class UserController {
           console.log("Não foi encontrado outros usuários com login: " + login)
           let lastid = 0;
           console.log("Buscando usuário de maior id.")
-          const allUsers = (await User.findAll()).map(usersWithSameLogin => usersWithSameLogin.toJSON());
+          const allUsers = (await User.findAll()).map(allUsers => allUsers.toJSON());
           
           allUsers.forEach(user => {
                               if (user.id > lastid){

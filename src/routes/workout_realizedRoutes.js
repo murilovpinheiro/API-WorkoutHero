@@ -27,7 +27,7 @@ router.post('/delete', urlencodedParser, async (req, res) => {
 });
 
 router.post('/insert', urlencodedParser, async (req, res) => {
-  const { id, workout_id, historic_id} = req.body;
+  const {workout_id, historic_id} = req.body;
   //console.log(req.body);
   const currentDate = new Date()
 
@@ -42,7 +42,7 @@ router.post('/insert', urlencodedParser, async (req, res) => {
 
   const durationTimeString = durationTime.toTimeString().substring(0, 8);
 
-  let response = await WorkoutRealizedController.createWorkoutRealized(id, currentDate, durationTimeString, workout_id, historic_id)
+  let response = await WorkoutRealizedController.createWorkoutRealized(currentDate, durationTimeString, workout_id, historic_id)
   res.json(response)
 });
 
