@@ -37,6 +37,7 @@ class UserController {
             });
         
             const response = {
+                sucess: true,
                 newUser: newUser,
             };
 
@@ -45,6 +46,7 @@ class UserController {
             //Caso dê erro a gente pega o erro e mostra, para ajudar tratamento e debug futuros :)
             //console.log(error)
             const response = {
+                sucess: false,
                 sql: error.parent.sql,
                 parameters: error.parent.parameters,
                 message: error.original.message,
@@ -76,15 +78,19 @@ class UserController {
                            });;
           lastid += 1;
           console.log("Novo id encontrado: " + lastid)
-          return await this.createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0), await lastid;
+          return await this.createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0), lastid;
           
         }else{
           console.log("Foi encontrado um usuário com o login: " + login)
-          return {message: "Já existe um usuário com este login!."}, null
+          return {
+            sucess: false,
+            message: "Já existe um usuário com este login!."
+          }, null
         }
       }
       catch(error){
         const response = {
+          sucess: false,
           message: error.message,
         };
         return response, null; 
@@ -106,12 +112,16 @@ class UserController {
         });
     
         if (records.length === 0) {
-          return { message: "Nenhum registro encontrado." };
+          return { 
+            sucess: false,
+            message: "Nenhum registro encontrado." 
+          };
         } else {
           return records.map(record => record.toJSON());
         }
       } catch (error) {
         const response = {
+          sucess: false,
           message: error.message,
         };
         if (error.parent && error.parent.sql) {
