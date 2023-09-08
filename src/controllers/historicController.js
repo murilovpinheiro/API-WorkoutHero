@@ -21,6 +21,7 @@ class HistoricController{
             });
         
             const response = {
+              sucess: true,
               newHistoric: newHistoric,
               message: 'Inserção do histórico foi efetuada corretamente.',
             }; // retornando o JSON para ver o resultado
@@ -29,7 +30,9 @@ class HistoricController{
           } catch (error) {
             //Caso dê erro a gente pega o erro e mostra, para ajudar tratamento e debug futuros :)
             //console.log(error)
+            console.log("createHistoric error: ", error)
             const response = {
+              sucess: false,
               sql: error.parent.sql,
               parameters: error.parent.parameters,
               message: error.original.message,
@@ -55,9 +58,11 @@ class HistoricController{
         }
       } catch (error) {
         const response = {
+          sucess: false,
           message: error.message,
         };
         if (error.parent && error.parent.sql) {
+          sucess: false,
           response.sql = error.parent.sql;
           response.parameters = error.parent.parameters;
         }

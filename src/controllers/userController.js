@@ -40,11 +40,10 @@ class UserController {
                 sucess: true,
                 newUser: newUser,
             };
-
             return response; // Envie a resposta JSON no caso de sucesso
         } catch (error) {
             //Caso dê erro a gente pega o erro e mostra, para ajudar tratamento e debug futuros :)
-            //console.log(error)
+            console.log("createUser error: ", error)
             const response = {
                 sucess: false,
                 sql: error.parent.sql,
@@ -78,14 +77,20 @@ class UserController {
                            });;
           lastid += 1;
           console.log("Novo id encontrado: " + lastid)
-          return await this.createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0), lastid;
+          let createUserResponse = await this.createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0);
+          return {
+            sucess: true,
+            createUserResponse: createUserResponse, 
+            lastid: lastid
+          };
           
         }else{
           console.log("Foi encontrado um usuário com o login: " + login)
-          return {
+          const response = {
             sucess: false,
             message: "Já existe um usuário com este login!."
-          }, null
+          }
+          return response;
         }
       }
       catch(error){
@@ -93,7 +98,7 @@ class UserController {
           sucess: false,
           message: error.message,
         };
-        return response, null; 
+        return response; 
       }
     }
   

@@ -27,16 +27,32 @@ router.get('/select', urlencodedParser, buildUser, async (req, res) => {
 router.post('/register', urlencodedParser, buildUser, async (req, res) => {
   const {name, login, pass, weight, height, sex} = req.clause;
   const age = 20;
-  console.log("Criando USer")
-  let response, id = await UserController.registerUser(name, login, pass, age, weight, height, sex);
-  console.log("Criando Hist")
-  console.log(id)
-  console.log(response)
+  let response;
+  console.log("Criando User")
+  let user_response = await UserController.registerUser(name, login, pass, age, weight, height, sex);
+  if(user_response.sucess){
+    console.log("Criando Hist")
+    let id = user_response.lastid;
+    console.log("new user id: ", id)
+    //console.log("createUser Response: ", response.createUserResponse)
 
+    let historic_response = await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
 
-  await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
-  console.log("Deu bom")
-  console.log(response)
+    if(historic_response.sucess) response = {sucess: true, createUserResponse: user_response.createUserResponse}
+    else response = {
+      sucess: false, 
+      message: "Historic creation error", 
+      historic_response: historic_response
+    }
+
+  }
+  else response = {
+    sucess: false, 
+    message: "User creation error", 
+    user_response: user_response
+  }
+
+  console.log("response: ", response)
   res.json(response);
 });
 
