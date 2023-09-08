@@ -38,7 +38,7 @@ router.post('/register', urlencodedParser, buildUser, async (req, res) => {
 
     let historic_response = await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
 
-    if(historic_response.sucess) response = {sucess: true, createUserResponse: user_response.createUserResponse}
+    if(historic_response.sucess) response = {sucess: true, newUser: user_response.newUser}
     else response = {
       sucess: false, 
       message: "Historic creation error", 

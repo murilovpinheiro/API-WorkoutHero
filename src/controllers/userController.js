@@ -80,7 +80,7 @@ class UserController {
           let createUserResponse = await this.createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0);
           return {
             sucess: true,
-            createUserResponse: createUserResponse, 
+            newUser: createUserResponse.newUser, 
             lastid: lastid
           };
           
