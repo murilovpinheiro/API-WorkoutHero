@@ -28,10 +28,10 @@ router.post('/delete', urlencodedParser, async (req, res) => {
 });
 
 router.post('/insert', urlencodedParser, async (req, res) => {
-  const { id, name, login, pass, age, weight, height, sex, obj, xp, routine_id} = req.body;
+  const {id, workout_id, exercise_id} = req.body;
   //console.log(req.body);
   
-  let response = await WorkoutExerciseController.createWorkoutExercise(id, name, login, pass, age, weight, height, sex, obj, xp, routine_id)
+  let response = await WorkoutExerciseController.createWorkoutExercise(id, workout_id, exercise_id)
   res.json(response)
 });
 
