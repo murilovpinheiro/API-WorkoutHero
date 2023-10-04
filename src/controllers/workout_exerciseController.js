@@ -15,17 +15,17 @@ class WorkoutExerciseController{
         
             const response = {
               newWorkout_Exercise: newWorkout_Exercise,
+              sucess: true,
               message: 'Inserção do workout_exercise foi efetuada corretamente.',
             }; // retornando o JSON para ver o resultado
         
             return response; // Envie a resposta JSON no caso de sucesso
           } catch (error) {
             //Caso dê erro a gente pega o erro e mostra, para ajudar tratamento e debug futuros :)
-            //console.log(error)
+            console.log(error)
             const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
+              sucess: false,
+              message: error.message,
             };
             return response; // Envie a resposta JSON no caso de erro
           }
