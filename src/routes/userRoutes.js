@@ -86,7 +86,7 @@ router.post('/update', urlencodedParser, buildUser, async (req, res) => {
   });
 
 router.post('/forgot_password', async (req, res) => {
-  const {email} = req.body;
+  const {email} = req.clause;
   const whereClause = {
     login: email
   }
@@ -130,7 +130,7 @@ router.post('/forgot_password', async (req, res) => {
 })
 
 router.post('/reset_password', async (req, res) => {
-  const { email, token, password } = req.body;
+  const { email, token, password } = req.clause;
 
   try {
 
