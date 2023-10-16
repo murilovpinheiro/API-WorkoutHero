@@ -1,4 +1,3 @@
-const path = require('path')
 const nodemailer = require('nodemailer')
 const hbs = require('nodemailer-express-handlebars')
 
