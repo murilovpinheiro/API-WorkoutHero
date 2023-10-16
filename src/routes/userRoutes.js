@@ -5,6 +5,9 @@ const router = express.Router();
 var bodyParser = require('body-parser')
 const { buildUser } = require('../middlewares/middlewares');
 const historic = require("../controllers/historicController")
+const crypto = require('crypto');
+const mailer = require('../models/mailer')
+const { User } = require('../models/userModel');
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -81,5 +84,77 @@ router.post('/update', urlencodedParser, buildUser, async (req, res) => {
 
   res.json(response);
   });
+
+router.post('/forgot_password', async (req, res) => {
+  const {email} = req.body;
+  const whereClause = {
+    login: email
+  }
+
+  try {
+
+    const user = await UserController.getUserBy(whereClause) // TODO: isso aqui funciona?
+
+    if (!user) 
+      res.status(400).json({error: 'Usuario nao encontrado'})
+
+    const token = crypto.randomBytes(20).toString('hex');
+    
+    const now = new Date()
+    now.setHours(now.getHours() + 1)
+
+    let response = await UserController.updateUser(user.id,
+      // TODO: como encaixar uma whereclause aqui? 
+      {
+        passResetToken: token,
+        passResetExpires: now,
+      } 
+    )
+
+    mailer.sendMail({
+      to: email,
+      from: 'thomaz.aluno@alu.ufc.br',
+      template: 'auth/forgot_pass',
+      context: { token },
+
+    }, (err) => {
+      if (err) 
+        return res.status(400).send({ error: 'Erro ao mandar email'})
+
+      res.json(response)
+    })
+
+  } catch (err) {
+    res.status(400).send({error: 'Erro no forgot password, tente de novo'})
+  }
+})
+
+router.post('/reset_password', async (req, res) => {
+  const { email, token, password } = req.body;
+
+  try {
+
+    const user = await UserController.getUserBy({email}) // TODO: isso aqui funciona?
+    // TODO: precisa pegar tambem o token e a data de expiracao
+
+    if (!user) 
+      res.status(400).json({error: 'Usuario nao encontrado'})
+
+    if (token !== user.passResetToken)
+      res.status(400).json({error: 'Token invalido'})
+
+    const now = new Date()
+
+    if (now > user.passResetExpires)
+      return res.status(400).json({error: 'Token expirado, gere um novo'})
+
+    // TODO: SALVAR USUARIO NO BANCO COM SENHA NOVA
+    user.pass = password
+
+
+  } catch (err) {
+    res.status(400).json({error: 'Não conseguiu resetar a senha, tentar novamente'})
+  }
+})
 
 module.exports = router;

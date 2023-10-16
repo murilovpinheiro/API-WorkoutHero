@@ -23,6 +23,14 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    passResetToken: {
+      type: String,
+      allowNull: true,
+    },
+    passResetExpires: {
+      type: Date,
+      allowNull: true,
+    },
     age: {
       type: DataTypes.INTEGER,
       allowNull: false,
