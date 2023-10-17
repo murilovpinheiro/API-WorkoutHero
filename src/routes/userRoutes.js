@@ -103,7 +103,7 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
     console.log('novos atributos: ', now, token)
     console.log('user.id: ', user.id)
 
-    let response = await UserController.updateUser(user.id,
+    let response = await UserController.updateUser(parseInt(user.id),
       // TODO: como encaixar uma whereclause aqui? 
       {
         passResetToken: token,
@@ -127,8 +127,8 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
     })
 
   } catch (err) {
-    console.log('400: erro no forgot password, tente de novo')
-    res.status(400).send({error: 'Erro no forgot password, tente de novo'})
+    console.log('400: erro no forgot password, tente de novo', err)
+    res.status(400).json({error: 'Erro no forgot password, tente de novo'})
   }
 })
 
