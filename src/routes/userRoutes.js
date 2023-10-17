@@ -79,11 +79,13 @@ router.post('/update', urlencodedParser, buildUser, async (req, res) => {
 
 router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) => {
   
-  const whereClause = req.clause;
+  const { login } = req.clause;
+
+  console.log("LOGIN:", login)
 
   try {
 
-    const user = await UserController.getUserBy(whereClause) // TODO: isso aqui funciona?
+    const user = await UserController.getUserBy({ login }) // TODO: isso aqui funciona?
 
     console.log('FORGOT PASS', user)
 
