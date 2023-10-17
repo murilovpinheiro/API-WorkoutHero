@@ -87,8 +87,10 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
 
     console.log('FORGOT PASS', user)
 
-    if (!user) 
+    if (!user) {
+      console.log('erro 400: usuario nao encontrado')
       res.status(400).json({error: 'Usuario nao encontrado'})
+    }
 
     const token = crypto.randomBytes(20).toString('hex');
     
@@ -110,13 +112,16 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
       context: { token },
 
     }, (err) => {
-      if (err) 
+      if (err) {
+        console.log('400: erro ao mandar email')
         return res.status(400).send({ error: 'Erro ao mandar email'})
+      }
 
       res.json(response)
     })
 
   } catch (err) {
+    console.log('400: erro no forgot password, tente de novo')
     res.status(400).send({error: 'Erro no forgot password, tente de novo'})
   }
 })
