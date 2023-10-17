@@ -99,6 +99,9 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
     const now = new Date()
     now.setHours(now.getHours() + 1)
 
+    console.log('novos atributos: ', now, token)
+    console.log('user.id: ', user.id)
+
     let response = await UserController.updateUser(user.id,
       // TODO: como encaixar uma whereclause aqui? 
       {
