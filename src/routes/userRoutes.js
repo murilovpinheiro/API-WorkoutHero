@@ -119,7 +119,7 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
 
     }, (err) => {
       if (err) {
-        console.log('400: erro ao mandar email')
+        console.log('400: erro ao mandar email: ', err)
         return res.status(400).json({ error: 'Erro ao mandar email'})
       }
 
@@ -127,7 +127,7 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
     })
 
   } catch (err) {
-    console.log('400: erro no forgot password, tente de novo', err)
+    console.log('400: erro no forgot password, tente de novo: ', err)
     res.status(400).json({error: 'Erro no forgot password, tente de novo'})
   }
 })
