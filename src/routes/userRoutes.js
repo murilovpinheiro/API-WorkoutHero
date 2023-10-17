@@ -68,14 +68,6 @@ router.post('/insert', urlencodedParser, buildUser, async (req, res) => {
   //console.log(req.body);
   
 });
-router.get('/select', urlencodedParser, buildUser, async (req, res) => {
-  const whereClause = req.clause;
-
-  let response = await UserController.getUserBy(whereClause);
-  
-  res.json(response);
-  //console.log(whereClause)
-});
 
 router.post('/update', urlencodedParser, buildUser, async (req, res) => {
   const {id, ...updateClause} = req.clause;
@@ -83,17 +75,17 @@ router.post('/update', urlencodedParser, buildUser, async (req, res) => {
   let response  = await UserController.updateUser(id, updateClause);
 
   res.json(response);
-  });
+});
 
-router.post('/forgot_password', async (req, res) => {
-  const {email} = req.clause;
-  const whereClause = {
-    login: email
-  }
+router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) => {
+  
+  const whereClause = req.clause;
 
   try {
 
     const user = await UserController.getUserBy(whereClause) // TODO: isso aqui funciona?
+
+    console.log('FORGOT PASS', user)
 
     if (!user) 
       res.status(400).json({error: 'Usuario nao encontrado'})
