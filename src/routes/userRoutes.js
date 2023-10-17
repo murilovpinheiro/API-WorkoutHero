@@ -92,7 +92,10 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
 
     if (!user) {
       console.log('erro 400: usuario nao encontrado')
-      res.status(400).json({error: 'Usuario nao encontrado'})
+      res.status(400).json({
+        sucess: false,
+        message: 'Usuario nao encontrado',
+      })
     }
 
     const token = crypto.randomBytes(20).toString('hex');
@@ -120,7 +123,10 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
     }, (err) => {
       if (err) {
         console.log('400: erro ao mandar email: ', err)
-        return res.status(400).json({ error: 'Erro ao mandar email'})
+        return res.status(400).json({
+          sucess: false,
+          message: 'Erro ao mandar o email',
+        })
       }
 
       res.json(response)
@@ -128,7 +134,10 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
 
   } catch (err) {
     console.log('400: erro no forgot password, tente de novo: ', err)
-    res.status(400).json({error: 'Erro no forgot password, tente de novo'})
+    res.status(400).json({
+      sucess: false,
+      message: 'Usuario nao encontrado',
+    })
   }
 })
 
