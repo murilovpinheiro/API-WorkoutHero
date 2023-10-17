@@ -112,7 +112,7 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
     )
 
     mailer.sendMail({
-      to: email,
+      to: login,
       from: 'thomaz.aluno@alu.ufc.br',
       template: 'auth/forgot_pass',
       context: { token },
@@ -120,7 +120,7 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
     }, (err) => {
       if (err) {
         console.log('400: erro ao mandar email')
-        return res.status(400).send({ error: 'Erro ao mandar email'})
+        return res.status(400).json({ error: 'Erro ao mandar email'})
       }
 
       res.json(response)
