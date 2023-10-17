@@ -86,6 +86,7 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
   try {
 
     const user = await UserController.getUserBy({ login }) // TODO: isso aqui funciona?
+    user = user[0]
 
     console.log('FORGOT PASS', user)
 
