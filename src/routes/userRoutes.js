@@ -142,11 +142,11 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
 })
 
 router.post('/reset_password', async (req, res) => {
-  const { email, token, password } = req.clause;
+  const { login, token, password } = req.clause;
 
   try {
 
-    let user = await UserController.getUserBy({email}) // TODO: isso aqui funciona?
+    let user = await UserController.getUserBy({login}) // TODO: isso aqui funciona?
     user = user[0];
 
     console.log('USUARIO INDO TROCAR DE SENHA:', user)
