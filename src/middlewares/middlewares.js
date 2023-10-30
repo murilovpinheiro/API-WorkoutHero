@@ -19,6 +19,16 @@ function buildClause(req, res, next, filterMapping) {
 }
 
 // Para construir o filtro do usuário
+function buildToken(req, res, next) {
+  const filterMapping = {
+    login: 'login',
+    pass: 'pass',
+    passResetToken: 'passResetToken'
+  };
+
+  buildClause(req, res, next, filterMapping);
+}
+
 function buildUser(req, res, next) {
   const filterMapping = {
     id: 'id',
@@ -158,7 +168,8 @@ module.exports = {
     buildRoutineWorkouts,
     buildWorkoutExercise,
     buildWorkoutRealized,
-    buildWorkout
+    buildWorkout,
+    buildToken
   };
 
   // function buildUser(req, res, next) {

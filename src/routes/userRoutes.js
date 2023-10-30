@@ -3,7 +3,7 @@ const app = express();
 const controller = require('../controllers/userController')
 const router = express.Router();
 var bodyParser = require('body-parser')
-const { buildUser } = require('../middlewares/middlewares');
+const { buildUser, buildToken } = require('../middlewares/middlewares');
 const historic = require("../controllers/historicController")
 const crypto = require('crypto');
 const mailer = require('../models/mailer')
@@ -141,10 +141,11 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
   }
 })
 
-router.post('/reset_password', urlencodedParser, buildUser, async (req, res) => {
-  const { login, token, password } = req.clause;
+router.post('/reset_password', urlencodedParser, buildToken, async (req, res) => {
+  const { login, passResetToken, pass} = req.clause;
+  const token = passResetToken;
 
-  console.log('login token e senha: ', login, token, password);
+  console.log('login token e senha: ', login, token, pass);
 
   try {
 
@@ -188,7 +189,7 @@ router.post('/reset_password', urlencodedParser, buildUser, async (req, res) => 
     let response = await UserController.updateUser(parseInt(user.id),
       // TODO: como encaixar uma whereclause aqui? 
       {
-        pass: password,
+        pass: pass,
         // passResetToken: null,
         // passResetExpires: null
       }
