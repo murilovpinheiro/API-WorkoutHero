@@ -1,22 +1,81 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Exemplo de imagem</title>
-</head>
-<body>
-    <h1>Minha Imagem</h1>
-    <img src="https://raw.githubusercontent.com/murilovpinheiro/Engenharia-Software-TrabFinal/main/front/WorkoutHero/assets/icon.png" alt="Uma bela imagem">
-    <p>Esqueceu a senha? Use o seguinte token: {{token}}</p>
-</body>
-</html> -->
+
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Esqueceu a senha</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
 </head>
 <body>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+form {
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-container {
+    text-align: center; /* Centraliza o botão */
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
     <div id="token-container" data-token="{{token}}" style="display: none;"></div>
     <div class="form-container">
         <img src="https://raw.githubusercontent.com/murilovpinheiro/Engenharia-Software-TrabFinal/main/front/WorkoutHero/assets/icon.png" alt="WKhero">
