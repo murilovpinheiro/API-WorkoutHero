@@ -165,6 +165,8 @@ router.post('/reset_password', urlencodedParser, buildUser, async (req, res) => 
       res.status(400).json({
         sucess: false,
         message: 'Token invalido',
+        tokenErrado: token,
+        tokenCerto: user.passResetToken
       })
     }
       
