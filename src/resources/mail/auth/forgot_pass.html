@@ -111,10 +111,12 @@ button:hover {
         <p>Parece que você esqueceu sua senha. Se for o caso, clique no botão abaixo para redefinir sua senha.</h4>
         <div class="button-container">
             <!-- <button id="botao" type="submit">Redefinir Senha</button> -->
-            <a href="https://google.com" class="button">Redefinir Senha</a>
+            <a href='exp://127.0.0.1:8081/--/workoutHero/forgotpass?login={{login}}&token={{token}}' class="button">
+                Redefinir Senha
+            </a>
         </div>
         <p>Caso não tenha esquecido sua senha, ignore esse email.</p>
-        <div>{{ token }} {{ login }}</div>
+        <!-- <div>{{ token }} {{ login }}</div> -->
     </div>
 
     <!-- <script>
