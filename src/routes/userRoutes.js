@@ -152,7 +152,8 @@ router.post('/reset_password', urlencodedParser, buildUser, async (req, res) => 
     user = user[0];
 
     console.log('USUARIO INDO TROCAR DE SENHA:', user)
-    console.log('TOKEN DO USUARIO', user.passResetToken);
+    const tokenUsuario = user.passResetToken;
+    console.log('TOKEN DO USUARIO', tokenUsuario);
     // TODO: precisa pegar tambem o token e a data de expiracao
 
     if (!user) {
@@ -163,13 +164,13 @@ router.post('/reset_password', urlencodedParser, buildUser, async (req, res) => 
       })
     }
 
-    if (token !== user.passResetToken) {
+    if (token !== tokenUsuario) {
       console.log('erro 400: token invalido')
       res.status(400).json({
         sucess: false,
         message: 'Token invalido',
         tokenErrado: token,
-        tokenCerto: user.passResetToken
+        tokenCerto: tokenUsuario
       })
     }
       
