@@ -1,1 +1,77 @@
-<p>Esqueceu a senha? use o seguinte token: {{token}}</p>
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Exemplo de imagem</title>
+</head>
+<body>
+    <h1>Minha Imagem</h1>
+    <img src="https://raw.githubusercontent.com/murilovpinheiro/Engenharia-Software-TrabFinal/main/front/WorkoutHero/assets/icon.png" alt="Uma bela imagem">
+    <p>Esqueceu a senha? Use o seguinte token: {{token}}</p>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Esqueceu a senha</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="token-container" data-token="{{token}}" style="display: none;"></div>
+    <div class="form-container">
+        <img src="https://raw.githubusercontent.com/murilovpinheiro/Engenharia-Software-TrabFinal/main/front/WorkoutHero/assets/icon.png" alt="WKhero">
+        <h2>Esqueceu a senha?</h2>
+        <form action="" method="">
+            <label for="password">Nova Senha:</label>
+            <input type="password" id="password" name="password" required>
+            <label for="confirm_password">Confirme a Senha:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+            <div class="button-container">
+                <button id="botao" type="submit">Redefinir Senha</button>
+            </div>
+        </form>
+        <div>
+            <h4 id="statusmsg"></h3>
+        </div>
+    </div>
+
+    <script>
+
+        var tokenElement = document.getElementById("token-element");
+        var token = tokenElement.getAttribute("data-token");
+
+        const baseUrl = 'https://apiworkouthero.onrender.com'
+
+        document.getElementById("botao").addEventListener("click", function(event){
+            event.preventDefault();
+            validarSenha();
+        });
+
+        function validarSenha() {
+            // e.preventDefault();
+
+            var senha = document.getElementById("password").value;
+            var confirmSenha = document.getElementById("confirm_password").value;
+            const msgtag = document.getElementById('statusmsg');
+            const [input1, input2] = document.getElementsByTagName('input');
+
+            if (senha !== confirmSenha) {
+                // alert("As senhas não coincidem. Por favor, digite senhas iguais.");
+                // console.log("As senhas não coincidem. Por favor, digite senhas iguais.");
+
+                msgtag.textContent = 'As senhas não coincidem. Por favor, digite senhas iguais.' + token;
+                msgtag.style.color = 'red'
+            } else {
+                // confirmar senha
+
+                // SE DEU CERTO:
+                msgtag.textContent = 'Senha modificada com sucesso!' + token;
+                msgtag.style.color = 'green'
+            }
+            
+            input1.value = '';
+            input2.value = '';
+        }
+    </script>
+</body>
+</html>
