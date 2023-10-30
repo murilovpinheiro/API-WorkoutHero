@@ -183,8 +183,8 @@ router.post('/reset_password', urlencodedParser, buildUser, async (req, res) => 
       // TODO: como encaixar uma whereclause aqui? 
       {
         pass: password,
-        passResetToken: null,
-        passResetExpires: null
+        // passResetToken: null,
+        // passResetExpires: null
       }
     )
 
