@@ -118,7 +118,7 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
       to: login,
       from: 'thomaz.aluno@alu.ufc.br',
       template: 'auth/forgot_pass',
-      context: { token },
+      context: { login, token },
 
     }, (err) => {
       if (err) {
