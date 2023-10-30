@@ -141,7 +141,7 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
   }
 })
 
-router.post('/reset_password', async (req, res) => {
+router.post('/reset_password', urlencodedParser, buildUser, async (req, res) => {
   const { login, token, password } = req.clause;
 
   try {
