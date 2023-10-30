@@ -146,23 +146,49 @@ router.post('/reset_password', async (req, res) => {
 
   try {
 
-    const user = await UserController.getUserBy({email}) // TODO: isso aqui funciona?
+    let user = await UserController.getUserBy({email}) // TODO: isso aqui funciona?
+    user = user[0];
+
+    console.log('USUARIO INDO TROCAR DE SENHA:', user)
     // TODO: precisa pegar tambem o token e a data de expiracao
 
-    if (!user) 
-      res.status(400).json({error: 'Usuario nao encontrado'})
+    if (!user) {
+      console.log('erro 400: usuario nao encontrado')
+      res.status(400).json({
+        sucess: false,
+        message: 'Usuario nao encontrado',
+      })
+    }
 
-    if (token !== user.passResetToken)
-      res.status(400).json({error: 'Token invalido'})
-
+    if (token !== user.passResetToken) {
+      console.log('erro 400: token invalido')
+      res.status(400).json({
+        sucess: false,
+        message: 'Token invalido',
+      })
+    }
+      
     const now = new Date()
 
-    if (now > user.passResetExpires)
-      return res.status(400).json({error: 'Token expirado, gere um novo'})
+    if (now > user.passResetExpires) {
+      console.log('erro 400: token expirado')
+      res.status(400).json({
+        sucess: false,
+        message: 'Token expirado',
+      })
+    }
 
     // TODO: SALVAR USUARIO NO BANCO COM SENHA NOVA
-    user.pass = password
+    let response = await UserController.updateUser(parseInt(user.id),
+      // TODO: como encaixar uma whereclause aqui? 
+      {
+        pass: password,
+        passResetToken: null,
+        passResetExpires: null
+      }
+    )
 
+    res.json(response);
 
   } catch (err) {
     res.status(400).json({error: 'Não conseguiu resetar a senha, tentar novamente'})
