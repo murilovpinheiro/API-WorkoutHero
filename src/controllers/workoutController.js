@@ -8,31 +8,49 @@ const { Muscular_Group } = require('../models/muscular_groupModel');
 
 class WorkoutController{
 
-    async createWorkout( id, difficulty, obj, user_id) {
+    async createWorkout(id, difficulty, obj, user_id) {
         try {
-            const newWorkout = await Workout.create({ // criando o workout
-              id: id,
-              difficulty: difficulty,
-              obj: obj,
-              user_id: user_id
-            });
-        
-            const response = {
-              newWorkout: newWorkout,
-              message: 'Inserção do workout foi efetuada corretamente.',
-            }; 
-        
-            return response;
-          } catch (error) {
-            //Caso dê erro a gente pega o erro e mostra, para ajudar tratamento e debug futuros :)
-            //console.log(error)
-            const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
-            };
-            return response;
-          }
+
+          let current_id = 0;
+          let last_id = 0
+
+          console.log("Buscando id de workout disponível.")
+          const allWorkouts = (await Workout.findAll()).map(allWorkouts => allWorkouts.toJSON());
+          
+          allWorkouts.forEach(workout => {
+            if (workout.id > last_id){
+              last_id = workout.id
+            }
+            if (workout.id == current_id){
+              current_id = last_id + 1;
+            }
+          });
+
+          console.log("id disponível encontrado: " + current_id)
+
+          const newWorkout = await Workout.create({ // criando o workout
+            id: current_id,
+            difficulty: difficulty,
+            obj: obj,
+            user_id: user_id
+          });
+      
+          const response = {
+            newWorkout: newWorkout,
+            message: 'Inserção do workout foi efetuada corretamente.',
+          }; 
+      
+          return response;
+        } catch (error) {
+          //Caso dê erro a gente pega o erro e mostra, para ajudar tratamento e debug futuros :)
+          //console.log(error)
+          const response = {
+            sql: error.parent.sql,
+            parameters: error.parent.parameters,
+            message: error.original.message,
+          };
+          return response;
+        }
     }
     async getWorkoutBy(whereClause) {
       try {
