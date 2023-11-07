@@ -94,9 +94,8 @@ class MuscularGroupExerciseController{
             }
           } catch (error) {
             const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
+              message: error.message,
+              sucess: false
             };
 
             return response
