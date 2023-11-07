@@ -24,9 +24,9 @@ class MuscularGroupExerciseController{
             //Caso dê erro a gente pega o erro e mostra, para ajudar tratamento e debug futuros :)
             //console.log(error)
             const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
+              message: error.message,
+              error: error,
+              sucess: false
             };
             return response;
           }
@@ -46,9 +46,9 @@ class MuscularGroupExerciseController{
         }catch(error){
         // já já mudar o erro para JSON
             const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
+              message: error.message,
+              error: error,
+              sucess: false
             };
             return response; 
             //console.error('Erro ao pesquisar registros:', error);
@@ -71,9 +71,8 @@ class MuscularGroupExerciseController{
              }
            } catch{
              const response = {
-               sql: error.parent.sql,
-               parameters: error.parent.parameters,
-               message: error.original.message,
+              message: error.message,
+              sucess: false
              };
              return response; // Envie a resposta JSON no caso de erro
            }
@@ -95,6 +94,7 @@ class MuscularGroupExerciseController{
           } catch (error) {
             const response = {
               message: error.message,
+              error: error,
               sucess: false
             };
 
