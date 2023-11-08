@@ -104,7 +104,7 @@ class ExerciseController{
               ]
             })
           })
-          return records.map(record => record.toJSON());
+          return exercises.map(record => record.toJSON());
         }
       } catch (error) {
         const response = {
