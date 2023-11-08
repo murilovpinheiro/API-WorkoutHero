@@ -35,6 +35,14 @@ router.post('/insert', urlencodedParser, async (req, res) => {
   res.json(response)
 });
 
+router.post('/insert2', urlencodedParser, async (req, res) => {
+  const {id, workout_id, exercise_id} = req.clause;
+  //console.log(req.body);
+  
+  let response = await WorkoutExerciseController.createWorkoutExercise(id, workout_id, exercise_id)
+  res.json(response)
+});
+
 router.post('/update', urlencodedParser, buildWorkoutExercise, async (req, res) => {
   const {id, ...updateClause} = req.clause;
   
