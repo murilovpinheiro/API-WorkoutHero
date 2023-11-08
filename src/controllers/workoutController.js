@@ -43,11 +43,12 @@ class WorkoutController{
           return response;
         } catch (error) {
           //Caso dê erro a gente pega o erro e mostra, para ajudar tratamento e debug futuros :)
-          //console.log(error)
+          console.log(error)
           const response = {
-            sql: error.parent.sql,
-            parameters: error.parent.parameters,
-            message: error.original.message,
+            // sql: error.parent.sql,
+            // parameters: error.parent.parameters,
+            sucess: false,
+            message: 'Erro ao criar workout',
           };
           return response;
         }
