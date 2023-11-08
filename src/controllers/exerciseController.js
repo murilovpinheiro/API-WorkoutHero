@@ -69,6 +69,55 @@ class ExerciseController{
       }
     };
 
+    async getExercise2By(whereClause) {
+      try {
+        const records = await Exercise.findAll({
+          where: whereClause,
+          include: {
+            model: Muscular_Group,
+            as: 'muscularGroups',
+          },
+        });
+    
+        if (records.length === 0) {
+          return { message: "Nenhum registro encontrado." };
+        } else {
+          let exercises = []
+          records.forEach(exercise => {
+            exercises.push({
+              id: exercise.id,
+              name: exercise.name,
+              sets: exercise.sets,
+              reps: exercise.reps,
+
+              bodyPart: "empty",
+              equipment: "empty",
+              gifUrl: "empty",
+              imgName: "Dumbbell_Squat",
+
+              target: "empty",
+              secondaryMuscles: [
+                "empty"
+              ],
+              instructions: [
+                "empty"
+              ]
+            })
+          })
+          return records.map(record => record.toJSON());
+        }
+      } catch (error) {
+        const response = {
+          message: error.message,
+        };
+        if (error.parent && error.parent.sql) {
+          response.sql = error.parent.sql;
+          response.parameters = error.parent.parameters;
+        }
+        return response;
+      }
+    };
+
     async deleteExerciseBy(id) {
         try {
             const numDeleted = await Exercise.destroy({

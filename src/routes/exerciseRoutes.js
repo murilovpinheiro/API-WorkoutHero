@@ -15,6 +15,13 @@ router.get('/select', urlencodedParser, buildExercise, async (req, res) => {
     let response = await ExerciseController.getExerciseBy(whereClause);
     res.json(response)
   });
+
+router.get('/select2', urlencodedParser, buildExercise, async (req, res) => {
+    const whereClause = req.clause;
+
+    let response = await ExerciseController.getExercise2By(whereClause);
+    res.json(response)
+  });
   
   router.post('/delete', urlencodedParser, async (req, res) => {
     const {id} = req.body;
