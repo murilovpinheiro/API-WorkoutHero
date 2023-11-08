@@ -9,6 +9,7 @@ const { Muscular_Group } = require('../models/muscular_groupModel');
 class WorkoutController{
 
     async createWorkout(id, difficulty, obj, user_id) {
+        console.log('PARAMETROS: ', id, difficulty, obj, user_id);
         try {
 
           let current_id = 0;
