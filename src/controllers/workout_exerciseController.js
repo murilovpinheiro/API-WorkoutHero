@@ -7,8 +7,26 @@ class WorkoutExerciseController{
 
     async createWorkoutExercise(id, workout_id, exercise_id) {
         try {
+
+            let current_id = 0;
+            let last_id = 0
+
+            console.log("Buscando id de workout_exercise disponível.")
+            const allWorkoutExercises = (await Workout_Exercise.findAll()).map(allWorkoutExercises => allWorkoutExercises.toJSON());
+            
+            allWorkoutExercises.forEach(workout_exercise => {
+              if (workout_exercise.id > last_id){
+                last_id = workout_exercise.id
+              }
+              if (workout_exercise.id == current_id){
+                current_id = last_id + 1;
+              }
+            });
+
+            console.log("id disponível encontrado: " + current_id)
+
             const newWorkout_Exercise = await Workout_Exercise.create({ // criando o workout_exercise
-              id: id, 
+              id: current_id, 
               workout_id: workout_id,
               exercise_id: exercise_id
             });
