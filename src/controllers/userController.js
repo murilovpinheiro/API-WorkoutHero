@@ -79,7 +79,7 @@ class UserController {
               last_id = workout.id
             }
             if (workout.id == current_id){
-              console.log("Conflito: id atual = " + current_id + ", workout.id = " + workout.id)
+              console.log("Conflito com: workout.id = " + workout.id)
               current_id = last_id + 1;
             }
           });
