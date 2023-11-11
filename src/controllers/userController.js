@@ -74,10 +74,12 @@ class UserController {
           const allWorkouts = (await Workout.findAll()).map(allWorkouts => allWorkouts.toJSON());
           
           allWorkouts.forEach(workout => {
+            console.log("id atual: " + current_id)
             if (workout.id > last_id){
               last_id = workout.id
             }
             if (workout.id == current_id){
+              console.log("Conflito: id atual = " + current_id + ", workout.id = " + workout.id)
               current_id = last_id + 1;
             }
           });
