@@ -84,8 +84,6 @@ class UserController {
 
           console.log("id disponível encontrado: " + current_id)
 
-          lastid += 1;
-          console.log("Novo id encontrado: " + current_id)
           let createUserResponse = await this.createUser(current_id, name, login, pass, age, weight, height, sex, " ", 0);
           return {
             sucess: true,
@@ -106,6 +104,7 @@ class UserController {
         const response = {
           sucess: false,
           message: error.message,
+          error: error,
         };
         return response; 
       }
