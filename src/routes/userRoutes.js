@@ -69,6 +69,13 @@ router.post('/insert', urlencodedParser, buildUser, async (req, res) => {
   
 });
 
+router.post('/delete', urlencodedParser, buildUser, async (req, res) => {
+  const {id} = req.body;
+  
+  let response = await UserController.deleteUserBy(id)
+  res.json(response)
+});
+
 router.post('/update', urlencodedParser, buildUser, async (req, res) => {
   const {id, ...updateClause} = req.clause;
   
