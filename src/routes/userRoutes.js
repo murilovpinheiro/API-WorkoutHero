@@ -39,7 +39,7 @@ router.post('/register', urlencodedParser, buildUser, async (req, res) => {
     console.log("new user id: ", id)
     //console.log("createUser Response: ", response.createUserResponse)
 
-    let historic_response = await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
+    let historic_response = await HistoricController.createHistoric(id, id, 0, 0, 0, 0);
 
     if(historic_response.sucess) response = {sucess: true, newUser: user_response.newUser}
     else response = {
