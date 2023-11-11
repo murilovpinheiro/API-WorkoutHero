@@ -71,15 +71,15 @@ class UserController {
           let last_id = 0
 
           console.log("Buscando id de usuário disponível.")
-          const allWorkouts = (await Workout.findAll()).map(allWorkouts => allWorkouts.toJSON());
+          const allUsers = (await User.findAll()).map(allUsers => allUsers.toJSON());
           
-          allWorkouts.forEach(workout => {
+          allUsers.forEach(user => {
             console.log("id atual: " + current_id)
-            if (workout.id > last_id){
-              last_id = workout.id
+            if (user.id > last_id){
+              last_id = user.id
             }
-            if (workout.id == current_id){
-              console.log("Conflito com: workout.id = " + workout.id)
+            if (user.id == current_id){
+              console.log("Conflito com: user.id = " + user.id)
               current_id = last_id + 1;
             }
           });
