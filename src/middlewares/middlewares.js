@@ -29,6 +29,16 @@ function buildToken(req, res, next) {
   buildClause(req, res, next, filterMapping);
 }
 
+function buildStatus(req, res, next) {
+  const filterMapping = {
+    login: 'login',
+    exercisesRealized: 'exercisesRealized',
+    repsRealized: 'repsRealized'
+  };
+
+  buildClause(req, res, next, filterMapping)
+}
+
 function buildUser(req, res, next) {
   const filterMapping = {
     id: 'id',
@@ -169,7 +179,8 @@ module.exports = {
     buildWorkoutExercise,
     buildWorkoutRealized,
     buildWorkout,
-    buildToken
+    buildToken,
+    buildStatus
   };
 
   // function buildUser(req, res, next) {

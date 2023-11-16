@@ -55,6 +55,14 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    exercisesRealized: {
+      type: DataTypes.INTEGER,
+      allowNull: true // se for nulo, iguala a 0
+    },
+    repsRealized: {
+      type: DataTypes.INTEGER,
+      allowNull: true // se for nulo, iguala a 0
+    }
     /*routine_id: {
       type: DataTypes.INTEGER,
       allowNull: true,

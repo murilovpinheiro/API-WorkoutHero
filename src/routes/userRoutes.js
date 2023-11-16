@@ -3,7 +3,7 @@ const app = express();
 const controller = require('../controllers/userController')
 const router = express.Router();
 var bodyParser = require('body-parser')
-const { buildUser, buildToken } = require('../middlewares/middlewares');
+const { buildUser, buildToken, buildStatus } = require('../middlewares/middlewares');
 const historic = require("../controllers/historicController")
 const crypto = require('crypto');
 const mailer = require('../models/mailer')
@@ -144,19 +144,13 @@ router.post('/forgot_password', urlencodedParser, buildUser, async (req, res) =>
 router.post('/reset_password', urlencodedParser, buildToken, async (req, res) => {
   const { login, passResetToken, pass} = req.clause;
   const token = passResetToken;
-
   console.log('login token e senha: ', login, token, pass);
-
   try {
-
-    let user = await UserController.getUserBy({login}) // TODO: isso aqui funciona?
+    let user = await UserController.getUserBy({login}) 
     user = user[0];
-
     console.log('USUARIO INDO TROCAR DE SENHA:', user)
     const tokenUsuario = user.passResetToken;
     console.log('TOKEN DO USUARIO', tokenUsuario);
-    // TODO: precisa pegar tambem o token e a data de expiracao
-
     if (!user) {
       console.log('erro 400: usuario nao encontrado')
       res.status(400).json({
@@ -164,7 +158,6 @@ router.post('/reset_password', urlencodedParser, buildToken, async (req, res) =>
         message: 'Usuario nao encontrado',
       })
     }
-
     if (token !== tokenUsuario) {
       console.log('erro 400: token invalido')
       res.status(400).json({
@@ -173,10 +166,9 @@ router.post('/reset_password', urlencodedParser, buildToken, async (req, res) =>
         tokenErrado: token,
         tokenCerto: tokenUsuario
       })
-    }
-      
+    } 
+    // TODO: PELO VISTO AS HORAS NAO TAO CERTAS 
     const now = new Date()
-
     if (now > user.passResetExpires) {
       console.log('erro 400: token expirado')
       res.status(400).json({
@@ -184,21 +176,103 @@ router.post('/reset_password', urlencodedParser, buildToken, async (req, res) =>
         message: 'Token expirado',
       })
     }
-
-    // TODO: SALVAR USUARIO NO BANCO COM SENHA NOVA
     let response = await UserController.updateUser(parseInt(user.id),
-      // TODO: como encaixar uma whereclause aqui? 
       {
         pass: pass,
+        // TODO: COLOCAR ISSO EMBAIXO NULO SEM BUGS
         // passResetToken: null,
         // passResetExpires: null
       }
     )
-
     res.json(response);
-
   } catch (err) {
-    res.status(400).json({error: 'Não conseguiu resetar a senha, tentar novamente'})
+    res.status(400).json({
+      sucess: false,
+      message: 'Não conseguiu resetar a senha, tentar novamente'
+    })
+  }
+})
+
+router.post('/update_status', urlencodedParser, buildStatus, async (req, res) => {
+  const { login, exercisesRealized, repsRealized } = req.clause;
+  const contExs = exercisesRealized;
+  const contReps = repsRealized;
+  console.log('exercicios e reps: ', contExs, contReps);
+  console.log('login: ', login);
+  if (contExs < 0 || contReps < 0) {
+    res.status(400).json({
+      sucess: false,
+      message: 'Contagem negativa nao permitida!'
+    })
+  }
+  try {
+    let user = await UserController.getUserBy({login}) 
+    user = user[0];
+    console.log('USUARIO UPDATE STATUS:', user)
+    if (!user) {
+      res.status(400).json({
+        sucess: false,
+        message: 'Usuario nao encontrado'
+      })
+    }
+    let response = await UserController.updateUser(parseInt(user.id), 
+      {
+        exercisesRealized: contExs,
+        repsRealized: contReps
+      }
+    )
+    res.json(response);
+  } catch (err) {
+    res.status(400).json({
+      sucess: false,
+      message: 'Não conseguiu postar os status'
+    })
+  }
+})
+
+router.post('/add_status', urlencodedParser, buildStatus, async (req, res) => {
+  const { login, exercisesRealized, repsRealized } = req.clause;
+  const contExs = exercisesRealized;
+  const contReps = repsRealized;
+  console.log('exercicios e reps: ', contExs, contReps);
+  console.log('login: ', login);
+  if (contExs < 0 || contReps < 0) {
+    res.status(400).json({
+      sucess: false,
+      message: 'Contagem negativa nao permitida!'
+    })
+  }
+  try {
+    let user = await UserController.getUserBy({login}) 
+    user = user[0];
+    let contExsAtual = user.exercisesRealized;
+    let contRepsAtual = user.repsRealized;
+    // casos em que eles sao nulos
+    if (!contExsAtual) {
+      contExsAtual = 0;
+    }
+    if (!contRepsAtual) {
+      contRepsAtual = 0;
+    }
+    console.log('USUARIO UPDATE STATUS:', user)
+    if (!user) {
+      res.status(400).json({
+        sucess: false,
+        message: 'Usuario nao encontrado'
+      })
+    }
+    let response = await UserController.updateUser(parseInt(user.id), 
+      {
+        exercisesRealized: parseInt(contExs) + parseInt(contExsAtual),
+        repsRealized: parseInt(contReps) + parseInt(contRepsAtual)
+      }
+    )
+    res.json(response);
+  } catch (err) {
+    res.status(400).json({
+      sucess: false,
+      message: 'Não conseguiu postar os status'
+    })
   }
 })
 

@@ -140,27 +140,27 @@ class UserController {
   
   
     async updateUser(id, updateClause) {
-        try {
-            const user = await User.findByPk(id);
-            if (user) {
-              const updateUser = await user.update(updateClause);
-              const response = {
-                updateUser: updateUser,
-                message: 'Usuário atualizado com sucesso.',
-              };
-              return response;
-            } else {
-              return {message: 'Usuário não encontrado.'};
-            }
-          } catch (error) {
-            const response = {
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
-            };
-            return response;
-            }
+      try {
+        const user = await User.findByPk(id);
+        if (user) {
+          const updateUser = await user.update(updateClause);
+          const response = {
+            updateUser: updateUser,
+            message: 'Usuário atualizado com sucesso.',
+          };
+          return response;
+        } else {
+          return {message: 'Usuário não encontrado.'};
         }
+      } catch (error) {
+        const response = {
+          sql: error.parent.sql,
+          parameters: error.parent.parameters,
+          message: error.original.message,
+        };
+        return response;
+      }
+    }
 
     async deleteUserBy(id) {
         try {
