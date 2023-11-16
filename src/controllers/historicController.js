@@ -11,8 +11,28 @@ class HistoricController{
     async createHistoric( id, user_id, days_trained, weights_lifted, reps_done, time_training) {
         // Checagens vai ser no banco
         try {
+
+          let current_id = 0
+          let last_id = 0
+
+          console.log("Buscando id de histórico disponível.")
+          const allHistoric = (await Historic.findAll()).map(allHistoric => allHistoric.toJSON());
+          
+          allHistoric.forEach(historic => {
+            console.log("id atual: " + current_id)
+            if (historic.id > last_id){
+              last_id = historic.id
+            }
+            if (historic.id == current_id){
+              console.log("Conflito com: historic.id = " + historic.id)
+              current_id = last_id + 1;
+            }
+          });
+
+          console.log("Novo id encontrado: " + current_id)
+
             const newHistoric = await Historic.create({ // criando o usuário
-              id: id,
+              id: current_id,
               user_id: user_id,
               days_trained: days_trained,
               weights_lifted: weights_lifted,
@@ -33,9 +53,8 @@ class HistoricController{
             console.log("createHistoric error: ", error)
             const response = {
               sucess: false,
-              sql: error.parent.sql,
-              parameters: error.parent.parameters,
-              message: error.original.message,
+              message: error.message,
+              error: error,
             };
             return response; // Envie a resposta JSON no caso de erro
           }

@@ -63,25 +63,34 @@ class UserController {
         const usersWithSameLogin = (await User.findAll({
           where: whereClause,
         })).map(usersWithSameLogin => usersWithSameLogin.toJSON());
+
         if (usersWithSameLogin.length === 0) {
           console.log("Não foi encontrado outros usuários com login: " + login)
-          let lastid = 0;
-          console.log("Buscando usuário de maior id.")
+
+          let current_id = 0;
+          let last_id = 0
+
+          console.log("Buscando id de usuário disponível.")
           const allUsers = (await User.findAll()).map(allUsers => allUsers.toJSON());
           
           allUsers.forEach(user => {
-                              if (user.id > lastid){
-                                lastid = user.id
-                                console.log("Maior id atual: " + lastid)
-                              }
-                           });;
-          lastid += 1;
-          console.log("Novo id encontrado: " + lastid)
-          let createUserResponse = await this.createUser(lastid, name, login, pass, age, weight, height, sex, " ", 0);
+            console.log("id atual: " + current_id)
+            if (user.id > last_id){
+              last_id = user.id
+            }
+            if (user.id == current_id){
+              console.log("Conflito com: user.id = " + user.id)
+              current_id = last_id + 1;
+            }
+          });
+
+          console.log("id disponível encontrado: " + current_id)
+
+          let createUserResponse = await this.createUser(current_id, name, login, pass, age, weight, height, sex, " ", 0);
           return {
             sucess: true,
             newUser: createUserResponse.newUser, 
-            lastid: lastid
+            lastid: current_id
           };
           
         }else{
@@ -97,6 +106,7 @@ class UserController {
         const response = {
           sucess: false,
           message: error.message,
+          error: error,
         };
         return response; 
       }

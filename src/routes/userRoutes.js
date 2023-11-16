@@ -39,7 +39,7 @@ router.post('/register', urlencodedParser, buildUser, async (req, res) => {
     console.log("new user id: ", id)
     //console.log("createUser Response: ", response.createUserResponse)
 
-    let historic_response = await HistoricController.createHistoric(id+1, id, 0, 0, 0, 0);
+    let historic_response = await HistoricController.createHistoric(id, id, 0, 0, 0, 0);
 
     if(historic_response.sucess) response = {sucess: true, newUser: user_response.newUser}
     else response = {
@@ -67,6 +67,13 @@ router.post('/insert', urlencodedParser, buildUser, async (req, res) => {
   res.json(response);
   //console.log(req.body);
   
+});
+
+router.post('/delete', urlencodedParser, buildUser, async (req, res) => {
+  const {id} = req.body;
+  
+  let response = await UserController.deleteUserBy(id)
+  res.json(response)
 });
 
 router.post('/update', urlencodedParser, buildUser, async (req, res) => {
