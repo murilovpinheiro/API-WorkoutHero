@@ -79,7 +79,9 @@ function buildExercise(req, res, next) {
     obj: 'obj',
     reps_progress: 'reps_progress',
     weight_progress: 'weight_progress',
-    rest: 'rest'
+    rest: 'rest',
+    muscles: 'muscles',
+    body_part: 'body_part'
   };
 
   buildClause(req, res, next, filterMapping);

@@ -43,6 +43,14 @@ Exercise.init(
             type: DataTypes.TIME,
             allowNull:false
         },
+        muscles: {
+            type: DataTypes.STRING,
+            allowNull:true
+        },
+        body_part: {
+            type: DataTypes.STRING,
+            allowNull:true
+        }
     },
         {
             sequelize,

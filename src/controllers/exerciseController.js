@@ -7,7 +7,7 @@ const {Muscular_Group} = require('../models/muscular_groupModel');
 
 class ExerciseController{
 
-    async createExercise(id, name, difficulty, sets, reps, weight, obj, reps_progress, weight_progress, rest) {
+    async createExercise(id, name, difficulty, sets, reps, weight, obj, reps_progress, weight_progress, rest, muscles, body_part) {
         // Checagens vai ser no banco
 
         try {
@@ -21,7 +21,9 @@ class ExerciseController{
               obj: obj,
               reps_progress: reps_progress,
               weight_progress: weight_progress,
-              rest: rest
+              rest: rest,
+              muscles: muscles,
+              body_part: body_part
             });
         
             const response = {
@@ -89,6 +91,8 @@ class ExerciseController{
               name: exercise.name,
               sets: exercise.sets,
               reps: exercise.reps,
+              muscles: exercise.muscles,
+              body_part: exercise.body_part,
 
               bodyPart: "empty",
               equipment: "empty",

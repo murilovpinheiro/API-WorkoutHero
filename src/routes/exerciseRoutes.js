@@ -11,7 +11,6 @@ const ExerciseController = new controller();
 
 router.get('/select', urlencodedParser, buildExercise, async (req, res) => {
     const whereClause = req.clause;
-
     let response = await ExerciseController.getExerciseBy(whereClause);
     res.json(response)
   });
@@ -31,10 +30,10 @@ router.get('/select2', urlencodedParser, buildExercise, async (req, res) => {
   });
   
   router.post('/insert',urlencodedParser, async (req, res) => {
-    const { id, name, difficulty, sets, reps, weight, obj, reps_progress, weight_progress, rest} = req.body;
+    const { id, name, difficulty, sets, reps, weight, obj, reps_progress, weight_progress, rest, muscles, body_part} = req.body;
     //console.log(req.body);
 
-    let response = await ExerciseController.createExercise( id, name, difficulty, sets, reps, weight, obj, reps_progress, weight_progress, rest)
+    let response = await ExerciseController.createExercise( id, name, difficulty, sets, reps, weight, obj, reps_progress, weight_progress, rest, muscles, body_part)
     res.json(response)
   });
   
