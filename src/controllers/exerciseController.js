@@ -55,12 +55,15 @@ class ExerciseController{
         });
     
         if (records.length === 0) {
-          return { message: "Nenhum registro encontrado." };
+          return { 
+            message: "Nenhum registro encontrado." 
+          };
         } else {
           return records.map(record => record.toJSON());
         }
       } catch (error) {
         const response = {
+          sucess: false,
           message: error.message,
         };
         if (error.parent && error.parent.sql) {
@@ -74,6 +77,59 @@ class ExerciseController{
     async getExercise2By(whereClause) {
       try {
         const records = await Exercise.findAll({
+          where: whereClause,
+          include: {
+            model: Muscular_Group,
+            as: 'muscularGroups',
+          },
+        });
+    
+        if (records.length === 0) {
+          return { message: "Nenhum registro encontrado." };
+        } else {
+          let exercises = []
+          records.forEach(exercise => {
+            exercises.push({
+              id: exercise.id,
+              name: exercise.name,
+              sets: exercise.sets,
+              reps: exercise.reps,
+              muscles: exercise.muscles,
+              body_part: exercise.body_part,
+
+              bodyPart: "empty",
+              equipment: "empty",
+              gifUrl: "empty",
+              imgName: "Dumbbell_Squat",
+
+              target: "empty",
+              secondaryMuscles: [
+                "empty"
+              ],
+              instructions: [
+                "empty"
+              ]
+            })
+          })
+          return exercises;
+        }
+      } catch (error) {
+        const response = {
+          message: error.message,
+        };
+        if (error.parent && error.parent.sql) {
+          response.sql = error.parent.sql;
+          response.parameters = error.parent.parameters;
+        }
+        return response;
+      }
+    };
+
+    async getExercisePage2By(whereClause, offset = 0, limit = 10) {
+      try {
+        const records = await Exercise.findAll({
+          offset: offset,
+          limit: limit,
           where: whereClause,
           include: {
             model: Muscular_Group,

@@ -3,7 +3,7 @@ const app = express();
 const controller = require('../controllers/exerciseController')
 const router = express.Router();
 var bodyParser = require('body-parser')
-const { buildExercise } = require('../middlewares/middlewares');
+const { buildExercise, buildExercisePage } = require('../middlewares/middlewares');
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -15,10 +15,40 @@ router.get('/select', urlencodedParser, buildExercise, async (req, res) => {
     res.json(response)
   });
 
-router.get('/select2', urlencodedParser, buildExercise, async (req, res) => {
+  router.get('/select2', urlencodedParser, buildExercise, async (req, res) => {
     const whereClause = req.clause;
 
     let response = await ExerciseController.getExercise2By(whereClause);
+    res.json(response)
+  });
+
+  router.get('/selectPage', urlencodedParser, buildExercisePage, async (req, res) => {
+    const {whereClause} = req.clause;
+    console.log(whereClause);
+    let offset = 0;
+    let limit = 0;
+    if(whereClause){
+      if(whereClause.offset && whereClause.limit){
+        offset = whereClause.offset;
+        limit = whereClause.limit;
+      }
+      whereClause = {
+        id: whereClause.id, 
+        name: whereClause.name, 
+        difficulty: whereClause.difficulty, 
+        sets: whereClause.sets, 
+        reps: whereClause.reps, 
+        weight: whereClause.weight, 
+        obj: whereClause.obj, 
+        reps_progress: whereClause.reps_progress, 
+        weight_progress: whereClause. weight_progress, 
+        rest: whereClause, 
+        muscles: whereClause, 
+        body_part: whereClause
+      }
+    }
+
+    let response = await ExerciseController.getExercisePage2By(whereClause, (offset ? offset : 0), (limit ? limit: 10));
     res.json(response)
   });
   

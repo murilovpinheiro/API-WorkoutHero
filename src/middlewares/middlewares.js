@@ -87,6 +87,27 @@ function buildExercise(req, res, next) {
   buildClause(req, res, next, filterMapping);
 }
 
+function buildExercisePage(req, res, next) {
+  const filterMapping = {
+    id: 'id',
+    name: 'user_creator_id',
+    difficulty: 'difficulty',
+    sets: 'sets',
+    reps: 'reps',
+    weight: 'weight',
+    obj: 'obj',
+    reps_progress: 'reps_progress',
+    weight_progress: 'weight_progress',
+    rest: 'rest',
+    muscles: 'muscles',
+    body_part: 'body_part',
+    offset: 'offset',
+    limit: 'limit'
+  };
+
+  buildClause(req, res, next, filterMapping);
+}
+
 // Para construir o filtro do histórico
 function buildHistoric(req, res, next) {
   const filterMapping = {
@@ -174,6 +195,7 @@ module.exports = {
     buildUser, 
     buildRoutine, 
     buildExercise, 
+    buildExercisePage,
     buildHistoric, 
     buildMuscularGroupExercise,
     buildMuscularGroup, 
