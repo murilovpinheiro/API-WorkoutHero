@@ -16,6 +16,7 @@ function buildClause(req, res, next, filterMapping) {
   }
 
   req.clause = clause;
+  console.log(req.clause)
   next();
 }
 

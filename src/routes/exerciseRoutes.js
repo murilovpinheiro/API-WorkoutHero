@@ -4,6 +4,7 @@ const controller = require('../controllers/exerciseController')
 const router = express.Router();
 var bodyParser = require('body-parser')
 const { buildExercise, buildExercisePage } = require('../middlewares/middlewares');
+const { where } = require('sequelize');
 
 var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -23,9 +24,10 @@ router.get('/select', urlencodedParser, buildExercise, async (req, res) => {
   });
 
   router.get('/selectPage', urlencodedParser, buildExercisePage, async (req, res) => {
-    const {whereClause} = req.clause;
+    let whereClause = req.clause;
 
-    console.log(whereClause);
+    console.log("req.clause: ", req.clause);
+    console.log("whereClause: ", whereClause);
 
     let offset = 0;
     let limit = 10;
@@ -37,22 +39,13 @@ router.get('/select', urlencodedParser, buildExercise, async (req, res) => {
 
         offset = whereClause.offset;
         limit = whereClause.limit;
-      }
-      whereClause = {
-        id: whereClause.id, 
-        name: whereClause.name, 
-        difficulty: whereClause.difficulty, 
-        sets: whereClause.sets, 
-        reps: whereClause.reps, 
-        weight: whereClause.weight, 
-        obj: whereClause.obj, 
-        reps_progress: whereClause.reps_progress, 
-        weight_progress: whereClause. weight_progress, 
-        rest: whereClause.rest, 
-        muscles: whereClause.muscles, 
-        body_part: whereClause.body_part
+
+        delete whereClause.offset;
+        delete whereClause.limit;
       }
     }
+
+    console.log(whereClause);
 
     let response = await ExerciseController.getExercisePage2By(whereClause, (offset != 0 ? offset : 0), (limit != 10 ? limit: 10));
     res.json(response)
