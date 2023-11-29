@@ -28,7 +28,7 @@ router.get('/select', urlencodedParser, buildExercise, async (req, res) => {
     console.log(whereClause);
 
     let offset = 0;
-    let limit = 0;
+    let limit = 10;
 
     if(whereClause){
       if(whereClause.offset && whereClause.limit){
@@ -54,7 +54,7 @@ router.get('/select', urlencodedParser, buildExercise, async (req, res) => {
       }
     }
 
-    let response = await ExerciseController.getExercisePage2By(whereClause, (offset ? offset : 0), (limit ? limit: 10));
+    let response = await ExerciseController.getExercisePage2By(whereClause, (offset != 0 ? offset : 0), (limit != 10 ? limit: 10));
     res.json(response)
   });
   

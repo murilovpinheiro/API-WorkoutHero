@@ -1,5 +1,6 @@
 function buildClause(req, res, next, filterMapping) {
   let filters;
+  console.log(req.query);
   if (Object.keys(req.query).length === 0) {
     filters = req.body;
   } else {
