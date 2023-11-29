@@ -24,11 +24,17 @@ router.get('/select', urlencodedParser, buildExercise, async (req, res) => {
 
   router.get('/selectPage', urlencodedParser, buildExercisePage, async (req, res) => {
     const {whereClause} = req.clause;
+
     console.log(whereClause);
+
     let offset = 0;
     let limit = 0;
+
     if(whereClause){
       if(whereClause.offset && whereClause.limit){
+
+        console.log("offset = ", offset, ", limit = ", limit);
+
         offset = whereClause.offset;
         limit = whereClause.limit;
       }
@@ -42,9 +48,9 @@ router.get('/select', urlencodedParser, buildExercise, async (req, res) => {
         obj: whereClause.obj, 
         reps_progress: whereClause.reps_progress, 
         weight_progress: whereClause. weight_progress, 
-        rest: whereClause, 
-        muscles: whereClause, 
-        body_part: whereClause
+        rest: whereClause.rest, 
+        muscles: whereClause.muscles, 
+        body_part: whereClause.body_part
       }
     }
 
