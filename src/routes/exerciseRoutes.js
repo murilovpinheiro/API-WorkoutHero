@@ -33,14 +33,20 @@ router.get('/select', urlencodedParser, buildExercise, async (req, res) => {
     let limit = 10;
 
     if(whereClause){
-      if(whereClause.offset && whereClause.limit){
+      if(whereClause.offset){
 
-        console.log("offset = ", offset, ", limit = ", limit);
+        console.log("offset = ", offset);
 
         offset = whereClause.offset;
-        limit = whereClause.limit;
 
         delete whereClause.offset;
+      }
+      if(whereClause.limit){
+
+        console.log("limit = ", limit);
+
+        limit = whereClause.limit;
+
         delete whereClause.limit;
       }
     }
