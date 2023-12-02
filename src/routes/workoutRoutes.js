@@ -28,6 +28,13 @@ router.post('/delete', urlencodedParser, async (req, res) => {
   res.json(response)
 });
 
+router.post('/delete2', urlencodedParser, buildWorkout, async (req, res) => {
+  const {id} = req.clause;
+  
+  let response = await WorkoutController.deleteWorkoutBy(id)
+  res.json(response)
+});
+
 router.post('/insert', urlencodedParser, buildWorkout, async (req, res) => {
   const { id, difficulty, obj, user_id} = req.body;
   console.log('BODY: ', req.body);
