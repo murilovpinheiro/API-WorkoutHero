@@ -28,7 +28,9 @@ class WorkoutExerciseController{
             const newWorkout_Exercise = await Workout_Exercise.create({ // criando o workout_exercise
               id: current_id, 
               workout_id: workout_id,
-              exercise_id: exercise_id
+              exercise_id: exercise_id,
+              sets: 0,
+              reps: 0
             });
         
             const response = {

@@ -17,6 +17,14 @@ Workout_Exercise.init(
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        sets: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        reps: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
     },
         {
             sequelize,

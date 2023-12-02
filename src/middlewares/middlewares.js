@@ -161,7 +161,9 @@ function buildWorkoutExercise(req, res, next) {
   const filterMapping = {
     id: 'id',
     workout_id: 'workout_id',
-    exercise_id: 'exercise_id'
+    exercise_id: 'exercise_id',
+    sets: 'sets',
+    reps: 'reps'
   };
 
   buildClause(req, res, next, filterMapping);
