@@ -29,8 +29,8 @@ class WorkoutExerciseController{
               id: current_id, 
               workout_id: workout_id,
               exercise_id: exercise_id,
-              sets: 0,
-              reps: 0
+              sets: 3,
+              reps: 10
             });
         
             const response = {
